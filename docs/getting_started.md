@@ -7,7 +7,7 @@ Lu comes with a growing set of components. Each represents a building block of i
 In this guide I'll talk about the steps needed to create a tabbed interface. We'll start by getting to know Lu's dependencies. We'll get Lu on your page. We'll write HTML that describes the desired interaction. Then, we'll give our tabs some style.
 
 ##Dependencies
-Lu leverages a toolkit that includes <a href="http://www.jquery.com" target="_blank">jQuery</a> and <a href="http://documentcloud.github.com/underscore/" target="_blank">Underscore</a> as well as a<a href="https://github.com/linkedin/inject/" target="_blank">CommonJS Loader</a> and lightweight, fast inheritance through <a href="https://github.com/linkedin/fiber/" target="_blank">Fiber</a>. I'll provide a brief description of each here. For more in-depth information see the <a href="#">architectural primer</a>. 
+Lu leverages a toolkit that includes <a href="http://www.jquery.com" target="_blank">jQuery</a> and <a href="http://documentcloud.github.com/underscore/" target="_blank">Underscore</a>, as well as a <a href="https://github.com/linkedin/inject/" target="_blank">CommonJS Loader</a>, and inheritance through <a href="https://github.com/linkedin/fiber/" target="_blank">Fiber</a>. I'll provide a brief description of each here. For more in-depth information see the <a href="#">architectural primer</a>. 
 
 ###jQuery and Underscore
 You've probably have heard of jQuery, but may have not heard of Underscore. Underscore is a utility belt that provides methods for working with objects, collections, and arrays. Because jQuery's ```$( '.selector' )``` returns an array, Underscore and jQuery are a powerful pair.

@@ -43,24 +43,33 @@ The script we need to add is a bootstrap. This script came as part of the Lu dow
 ```
 
 ##Configuring Lu##
-This configuration is specific to Inject. For more advanced configuration, please refer to <a href="#" target="_blank"> Inject's Getting Started Guide</a> or to the manual of your commonJS Loader.
+This configuration is specific to Inject. For more advanced configuration, please refer to Inject's <a href="#" target="_blank">Getting Started Guide</a> or to the manual of your commonJS Loader.
 
 ```js
 ( function() {
 
-  var PATH_TO_LU_COMPONENTS = '/scripts/components/';
+  var PATH_TO_LU_COMPONENTS = '/scripts/lu/0.4.x/components/',
+    PATH_TO_LU_MAPS = '/scripts/lu/0.4.x/maps/';
 
   if( window.Inject ) {
     Inject.setModuleRoot('http://www.yourdomain.com');
+    //Rule for Components
     window.Inject.addRule( /^lu\//, {
       path: function( module ) {
         module = module.replace( 'lu/', '' );
         return PATH_TO_LU_COMPONENTS + module + '.js';
       }
     } );
+    //Rule for Mappers
+    window.Inject.addRule( /^lu-maps\//, {
+      path: function( module ) {
+        module = module.replace( 'lu-maps/', '' );
+        return PATH_TO_LU_MAPS + module + '.js';
+      }
+    } );
   }
 
-  require.ensure( ['lu', lu-map/default'], function(){
+  require.ensure( ['lu', lu-map/Default'], function(){
     $( function(){
       Lu.execute( document );
     } );
@@ -69,7 +78,14 @@ This configuration is specific to Inject. For more advanced configuration, pleas
 } () );
 ```
 
+Let's take this line by line.
 
+The first thing we do is set the path to Lu's components and maps. Point thees to wherever you'd like them to live on your server.
+
+```js
+var PATH_TO_LU_COMPONENTS = '/scripts/lu/0.4.x/components/',
+  PATH_TO_LU_MAPS = '/scripts/lu/0.4.x/maps/';
+```
 
 
 

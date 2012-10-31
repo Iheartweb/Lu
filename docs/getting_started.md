@@ -21,3 +21,17 @@ If your not already using a commonJS loader, we encourage the use of Inject. Inj
 While creating Lu, the team researched and used a plethora of inheritance libraries including <a href="#" target="_blank">Simple JavaScript Inheritance</a>, a underscore based variation inspired by backbone, <a href="#" target="_blank">Klass</a> and <a href="#" target="_blank">Klass</a>Protype.js's Class.js</a>. Nothing we looked at provided the right amount of sugar without obfuscating code or was fast enough. So, we created are own and rolled it out as <a href="#">Fiber</a>.
 
 Fiber provides Lu with a lightweight and fast way to describe inheritance between components. Check out its <a href="#" target="_blank">performance</a> or read about how the code that runs out components in <a href="#">structured</a>.
+
+##<script/>##
+
+You can download the latest stable version of Lu. This download includes everything necessary for Lu to work. This includes all dependencies and a node based server. If you already have ready to go, you can download the dependencies manually as well as a stand alone pre-built version.
+
+Once you have everything downloaded add the following to your page:
+
+```html<script src="path_to_jquery"/>```
+
+
+
+
+
+

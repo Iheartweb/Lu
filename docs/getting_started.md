@@ -18,9 +18,9 @@ All Lu components are modular; they're commonJS (AMD) compliant. This means that
 If your not already using a commonJS loader, we encourage the use of Inject. Inject goes above and beyond most other loaders and gives us improved caching as well as loading of scripts across domains. Also, as modularity is central to Lu's architecture, the Lu team works closely with the Inject team and contributes code on a regular basis.
 
 ###Inheritance###
-While creating Lu, the team researched and used a plethora of inheritance models including <a href="#" target="_blank">Simple JavaScript Inheritance</a>, a underscore based variation inspired by backbone, <a href="#" target="_blank">Klass</a> and <a href="#" target="_blank">Class</a>. Nothing we looked at provided the right amount of sugar without obfuscating code or was fast enough. So, we created are own and rolled it out as <a href="#">Fiber</a>.
+While creating Lu, the team researched and used a plethora of inheritance models including <a href="#" target="_blank">Simple JavaScript Inheritance</a>, a underscore based variation inspired by backbone, <a href="#" target="_blank">Klass</a> and <a href="#" target="_blank">Class</a>. Nothing we looked at provided the right amount of sugar without obfuscating code or was fast enough. So, we created one and rolled it out as <a href="#">Fiber</a>.
 
-Fiber provides Lu with a lightweight and fast way to describe inheritance between components. Check out its <a href="#" target="_blank">performance</a>. Read about how  its used to <a href="#">structured</a> our components.
+Fiber provides Lu with a lightweight and <a href="#" target="_blank">fast</a> way to describe inheritance between components. Read about how its used to <a href="#">structure</a> Lu's components.
 
 ##<script/>##
 
@@ -29,8 +29,8 @@ Start by downloading Lu and all of the dependencies: <a href="#">Lu</a>, <a href
 Once you have everything downloaded make sure you have the following scripts to your page:
 
 ```html
-<script src="[path_to_inject]"/>
-<script src="[path_to_jquery]"/>
+<script src="[path_to_inject].js"/>
+<script src="[path_to_jquery].js"/>
 <script src="[path_to_underscore]"/>
 <script src="[path_to_fiber]"/>
 ```

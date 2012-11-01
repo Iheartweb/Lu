@@ -36,7 +36,7 @@ Once you have everything downloaded make sure you have the following scripts to 
 ```
 **jQuery, Fiber, and Underscore are commonJS compliant. You could manage the loading of these libraries with inject.**
 
-The last script we need to add is a bootstrap and is disused in the next section.
+The last script we need to add is a bootstrap and is discussed in the next section.
 
 ```html
 <script src="[path_to_lu-config]"/>

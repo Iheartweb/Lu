@@ -43,7 +43,7 @@ The last script we need to add is a bootstrap and is discussed in the next secti
 ```
 
 ##Configuring Lu##
-In the aptly named ```lu-config.js``` there's a configuration for using Lu with Inject. For more advanced configuration, please refer to Inject's <a href="#" target="_blank">Getting Started Guide</a> or to the manual of your commonJS loader.
+In the aptly named ```lu-config.js``` there's a configuration for using Lu with Inject. The contents of this file look somthing like the below. For more advanced configuration, please refer to Inject's <a href="#" target="_blank">Getting Started Guide</a> or to the manual of your commonJS loader.
 
 ```js
 ( function() {
@@ -116,15 +116,28 @@ require.ensure( ['lu', lu-map/Default'], function(){
 If you've gotten this far the hard part is over. Let's write some HTML.
 
 ##Markup##
-This is the HTML for a basic tab setup using Lu.
+This markup is a basic tab implementation.
 
 ```html
-<ol aria-role="tablist">
-  <li aria-role="tab" aria-controls="sherlock">Sherlock</li>
-  <li aria-role="tab">Warson</li>
-  <li aria-role="tab">Moriartiy</li>
+<ol role="tablist" data-lu="List">
+  <li role="tab" class="lu-state-selected">
+    <a href="#sherlock">Sherlock</a>
+  </li>
+  <li role="tab">
+    <a href="#watson">Watson</a>
+  </li>
+  <li role="tab">
+    <a href="#sherlock">Moriarty</a>
+  </li>
 </ol>
 
-<div id="sherlock">
-  Tab Panel Sherlock
+<div id="sherlock" role="tabpanel" class="lu-state-selected" data-lu="Switch">
+  <!-- Content -->
 </div>
+<div id="watson" role="tabpanel" data-lu="Switch">
+  <!-- Content -->
+</div>
+<div id="moriarty" role="tabpanel" data-lu="Switch">
+  <!-- Content -->
+</div>
+```

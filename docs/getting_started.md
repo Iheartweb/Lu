@@ -20,7 +20,7 @@ If your not already using a commonJS loader, we encourage the use of Inject. Inj
 ###Inheritance###
 While creating Lu, the team researched and used a plethora of inheritance libraries including <a href="#" target="_blank">Simple JavaScript Inheritance</a>, a underscore based variation inspired by backbone, <a href="#" target="_blank">Klass</a> and <a href="#" target="_blank">Class</a>. Nothing we looked at provided the right amount of sugar without obfuscating code or was fast enough. So, we created are own and rolled it out as <a href="#">Fiber</a>.
 
-Fiber provides Lu with a lightweight and fast way to describe inheritance between components. Check out its <a href="#" target="_blank">performance</a> or read about how the code that runs out components in <a href="#">structured</a>.
+Fiber provides Lu with a lightweight and fast way to describe inheritance between components. Check out its <a href="#" target="_blank">performance</a>. Read about how  its used to <a href="#">structured</a> our components.
 
 ##<script/>##
 
@@ -36,14 +36,14 @@ Once you have everything downloaded make sure you have the following scripts to 
 ```
 **jQuery, Fiber, and Underscore are commonJS compliant. You could manage the loading of these libraries with inject.**
 
-The script we need to add is a bootstrap. This script came as part of the Lu download and contains configuration for loading Lu. It can be changed to fit your specific implementation.
+The last script we need to add is a bootstrap and is disused in the next section.
 
 ```html
 <script src="[path_to_lu-config]"/>
 ```
 
 ##Configuring Lu##
-This configuration is specific to Inject. For more advanced configuration, please refer to Inject's <a href="#" target="_blank">Getting Started Guide</a> or to the manual of your commonJS Loader.
+In the aptly named ```lu-config.js``` there's a configuration for using Lu with Inject. For more advanced configuration, please refer to Inject's <a href="#" target="_blank">Getting Started Guide</a> or to the manual of your commonJS loader.
 
 ```js
 ( function() {
@@ -102,7 +102,7 @@ Inject.setModuleRoot('http://localhost/');
 
 These rules tell inject how to map commonJS module Ids to files. For example the id of 'lu/Foo' maps to ````[PATH_TO_LU_COMPONENTS]foo.js``` Change thees rules at your own risk!
 
-The last lines that we'll look at tell Inject to load Lu's core javascript, a default set of mappers, as well as to initialize Lu when the document is ready. Changes to the DOM after ```domready```, are picked up automatically. See are guide to mappers for more information on this.
+The last lines that we'll look at tell Inject to load Lu's core javascript, a default set of mappers, as well as to initialize Lu when the document is ready. Changes to the DOM after ```domready```, are picked up automatically. See our guide to mappers for more information on this.
 
 Depending on your implementation you may want to remove thees lines and put it in your application's javascript.
 ```js
@@ -116,7 +116,3 @@ require.ensure( ['lu', lu-map/Default'], function(){
 If you've gotten this far the hard part is over. Let's write some HTML.
 
 ##Markup###
-
-
-
-

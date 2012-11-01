@@ -115,4 +115,4 @@ require.ensure( ['lu', lu-map/Default'], function(){
 
 If you've gotten this far the hard part is over. Let's write some HTML.
 
-##Markup###
+##Markup##

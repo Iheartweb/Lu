@@ -22,7 +22,7 @@ While creating Lu, the team researched and used a plethora of inheritance models
 
 Fiber provides Lu with a lightweight and <a href="#" target="_blank">fast</a> way to describe inheritance between components. Read about how its used to <a href="#">structure</a> Lu's components.
 
-##Script##
+###Script Inclusion###
 
 Start by downloading Lu and all of the dependencies: <a href="#">Lu</a>, <a href="#">jQuery</a>, <a href="#">Underscore</a>, <a href="#">Fiber</a>, <a href="#">Inject</a>.
 
@@ -116,3 +116,15 @@ require.ensure( ['lu', lu-map/Default'], function(){
 If you've gotten this far the hard part is over. Let's write some HTML.
 
 ##Markup##
+This is the HTML for a basic tab setup using Lu.
+
+```html
+<ol aria-role="tablist">
+  <li aria-role="tab" aria-controls="sherlock">Sherlock</li>
+  <li aria-role="tab">Warson</li>
+  <li aria-role="tab">Moriartiy</li>
+</ol>
+
+<div id="sherlock">
+  Tab Panel Sherlock
+</div>

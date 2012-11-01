@@ -24,7 +24,7 @@ Fiber provides Lu with a lightweight and fast way to describe inheritance betwee
 
 ##<script/>##
 
-You can download the latest stable version of Lu. This download includes everything necessary for Lu to work. This includes all dependencies and a node based server. If you already have ready to go, you can download the dependencies manually as well as a stand alone pre-built version.
+Start by downloading Lu and all of the dependencies: <a href="#">Lu</a>, <a href="#">jQuery</a>, <a href="#">Underscore</a>, <a href="#">Fiber</a>, <a href="#">Inject</a>.
 
 Once you have everything downloaded make sure you have the following scripts to your page:
 
@@ -48,11 +48,12 @@ This configuration is specific to Inject. For more advanced configuration, pleas
 ```js
 ( function() {
 
-  var PATH_TO_LU_COMPONENTS = '/scripts/lu/0.4.x/components/',
-    PATH_TO_LU_MAPS = '/scripts/lu/0.4.x/maps/';
+  var PATH_TO_LU = '/scripts/libraries/lu/0.4.x/', 
+    PATH_TO_LU_COMPONENTS = PATH_TO_LU + 'components/',
+    PATH_TO_LU_MAPS = PATH_TO_LU + 'maps/';
 
   if( window.Inject ) {
-    Inject.setModuleRoot('http://www.yourdomain.com');
+    Inject.setModuleRoot('http://localhost/');
     //Rule for Components
     window.Inject.addRule( /^lu\//, {
       path: function( module ) {
@@ -62,6 +63,13 @@ This configuration is specific to Inject. For more advanced configuration, pleas
     } );
     //Rule for Mappers
     window.Inject.addRule( /^lu-maps\//, {
+      path: function( module ) {
+        module = module.replace( 'lu-maps/', '' );
+        return PATH_TO_LU_MAPS + module + '.js';
+      }
+    } );
+    //Rule for Lu core
+    window.Inject.addRule( /^lu/, {
       path: function( module ) {
         module = module.replace( 'lu-maps/', '' );
         return PATH_TO_LU_MAPS + module + '.js';
@@ -78,14 +86,37 @@ This configuration is specific to Inject. For more advanced configuration, pleas
 } () );
 ```
 
-Let's take this line by line.
+Let's take apart this configuration and look at the important parts.
 
-The first thing we do is set the path to Lu's components and maps. Point thees to wherever you'd like them to live on your server.
-
+These lines are used to set the path to lu components. Edit them to point to your copy of Lu.
 ```js
-var PATH_TO_LU_COMPONENTS = '/scripts/lu/0.4.x/components/',
-  PATH_TO_LU_MAPS = '/scripts/lu/0.4.x/maps/';
+var PATH_TO_LU = '/scripts/libraries/lu/0.4.x/', 
+  PATH_TO_LU_COMPONENTS = PATH_TO_LU + 'components/',
+  PATH_TO_LU_MAPS = PATH_TO_LU + 'maps/';
 ```
+
+This line tells Inject the host to request files from. Change them to point to the location of Lu on your server. If your loading Lu from a remote server please see the <a href="#">inject guide</a> for cross domain loading.
+```js
+Inject.setModuleRoot('http://localhost/');
+```
+
+These rules tell inject how to map commonJS module Ids to files. For example the id of 'lu/Foo' maps to ````[PATH_TO_LU_COMPONENTS]foo.js``` Change thees rules at your own risk!
+
+The last lines that we'll look at tell Inject to load Lu's core javascript, a default set of mappers, as well as to initialize Lu when the document is ready. Changes to the DOM after ```domready```, are picked up automatically. See are guide to mappers for more information on this.
+
+Depending on your implementation you may want to remove thees lines and put it in your application's javascript.
+```js
+require.ensure( ['lu', lu-map/Default'], function(){
+  $( function(){
+    Lu.execute( document );
+  } );
+} );
+```
+
+If you've gotten this far the hard part is over. Let's write some HTML.
+
+##Markup###
+
 
 
 

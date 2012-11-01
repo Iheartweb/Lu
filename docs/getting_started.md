@@ -15,14 +15,14 @@ You've probably have heard of jQuery, but may have not heard of Underscore. Unde
 ###CommonJS###
 All Lu components are modular; they're commonJS (AMD) compliant. This means that they are loaded on the fly as needed. There are a lot of commonJS loaders out there. We use Inject, but also test Lu with requireJS and curl. If your already using one of those, great!
 
-If your not already using a commonJS loader, we encourage the use of Inject. Inject goes above and beyond most other loaders and gives us improved caching as well as loading of scripts across domains. Also, as modularity is central to Lu's architecture, the Lu team works closely with the Inject team and contributes code on a regular basis.
+If your not already using a commonJS loader, we encourage the use of Inject. Inject goes above and beyond most other loaders. It gives us improved caching as well as loading of scripts across domains. Also, as modularity is central to Lu's architecture, the Lu team works closely with the Inject team and contributes code on a regular basis.
 
 ###Inheritance###
 While creating Lu, the team researched and used a plethora of inheritance models including <a href="#" target="_blank">Simple JavaScript Inheritance</a>, a underscore based variation inspired by backbone, <a href="#" target="_blank">Klass</a> and <a href="#" target="_blank">Class</a>. Nothing we looked at provided the right amount of sugar without obfuscating code or was fast enough. So, we created one and rolled it out as <a href="#">Fiber</a>.
 
 Fiber provides Lu with a lightweight and <a href="#" target="_blank">fast</a> way to describe inheritance between components. Read about how its used to <a href="#">structure</a> Lu's components.
 
-##<script/>##
+##Script##
 
 Start by downloading Lu and all of the dependencies: <a href="#">Lu</a>, <a href="#">jQuery</a>, <a href="#">Underscore</a>, <a href="#">Fiber</a>, <a href="#">Inject</a>.
 

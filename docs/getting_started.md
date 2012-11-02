@@ -116,28 +116,42 @@ require.ensure( ['lu', lu-map/Default'], function(){
 If you've gotten this far the hard part is over. Let's write some HTML.
 
 ##Markup##
-This markup is a basic tab implementation.
+This markup is a tab implementation complete with Lu and aria role goodness.
 
 ```html
 <ol role="tablist" data-lu="List">
-  <li role="tab" class="lu-state-selected">
-    <a href="#sherlock">Sherlock</a>
+  <li role="tab" class="lu-state-selected" data-lu="Switch">
+    <a href="#sherlock" data-lu="Button:Select" aria-controls="sherlock">Sherlock</a>
   </li>
   <li role="tab">
-    <a href="#watson">Watson</a>
+    <a href="#watson" data-lu="Button:Select" aria-controls="sherlock">Watson</a>
   </li>
   <li role="tab">
-    <a href="#sherlock">Moriarty</a>
+    <a href="#sherlock" data-lu="Button:Select">Moriarty</a>
   </li>
 </ol>
 
-<div id="sherlock" role="tabpanel" class="lu-state-selected" data-lu="Switch">
+<div id="sherlock" role="tabpanel" aria-selected="true" class="lu-state-selected">
   <!-- Content -->
 </div>
-<div id="watson" role="tabpanel" data-lu="Switch">
+<div id="watson" role="tabpanel">
   <!-- Content -->
 </div>
-<div id="moriarty" role="tabpanel" data-lu="Switch">
+<div id="moriarty" role="tabpanel">
   <!-- Content -->
 </div>
 ```
+
+
+The unordered list is marked with the attribute ```data-lu="List"``. A ```List``` is a component that manages the state of a set of elements. ```List`` ensures that one of the items in the set is selected and the others are not.
+```html
+<ol role="tablist" data-lu="List"></ol>
+```
+
+The first ```li``` is selected and marked with the ```data-lu="Switch"``` attribute. A Switch is a component that is stateful, in this case the state is 'selected'.
+```html
+<li role="tab" class="lu-state-selected" data-lu="Switch">
+  <a href="#sherlock" data-lu="Button:Select" aria-controls="sherlock">Sherlock</a>
+</li>
+```
+

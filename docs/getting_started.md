@@ -154,7 +154,7 @@ The first ```li``` is selected and marked with the ```data-lu="Switch"``` attrib
 ```
 
 Each of the tabs contain an anchor with the attribute ```data-lu="Button:Select"```. A ```Button``` is a component that takes a native event like 'click' and transforms it into somthing meaninful. ```Button:Select``` transforms a tells a statefule component to set it's state to 'selected' when clicked.
-The ```aria-controls``` attribute informs Lu that both the tab and the tab panel need to be selected when clicked. 
+The ```aria-controls``` attribute informs Lu that both the tab and the tab panel need to be selected when clicked. Lu alternativley looks at the ```href``` to determine what the anchor controls when the aria role is not present.
 ```html
 <a href="#sherlock" data-lu="Button:Select" aria-controls="sherlock">Sherlock</a>
 ```

@@ -143,7 +143,7 @@ This markup is a tab implementation complete with Lu and aria role goodness.
 ```
 
 
-The unordered list is marked with the attribute ```data-lu="List"``. A ```List``` is a component that manages the state of a set of elements. ```List`` ensures that one of the items in the set is selected and the others are not.
+The unordered list is marked with the attribute ```data-lu="List"```. A ```List``` is a component that manages the state of a set of elements. ```List`` ensures that one of the items in the set is selected and the others are not.
 ```html
 <ol role="tablist" data-lu="List"></ol>
 ```

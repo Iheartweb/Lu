@@ -34,7 +34,7 @@ Once you have everything downloaded make sure you have the following scripts to 
 <script src="[path_to_underscore]"/>
 <script src="[path_to_fiber]"/>
 ```
-**jQuery, Fiber, and Underscore are commonJS compliant. You could manage the loading of these libraries with inject.**
+**jQuery, Fiber, and Underscore are commonJS compliant. You could manage the loading of these libraries with Inject.**
 
 The last script we need to add is a bootstrap and is discussed in the next section.
 
@@ -95,12 +95,12 @@ var PATH_TO_LU = '/scripts/libraries/lu/0.4.x/',
   PATH_TO_LU_MAPS = PATH_TO_LU + 'maps/';
 ```
 
-This line tells Inject the host to request files from. Change them to point to the location of Lu on your server. If your loading Lu from a remote server please see the <a href="#">inject guide</a> for cross domain loading.
+This line tells Inject the host to request files from. Change them to point to the location of Lu on your server. If your loading Lu from a remote server please see the <a href="#">Inject guide</a> for cross domain loading.
 ```js
 Inject.setModuleRoot('http://localhost/');
 ```
 
-These rules tell inject how to map commonJS module Ids to files. For example the id of 'lu/Foo' maps to ````[PATH_TO_LU_COMPONENTS]foo.js``` Change thees rules at your own risk!
+These rules tell Inject how to map commonJS module Ids to files. For example the id of 'lu/Foo' maps to ````[PATH_TO_LU_COMPONENTS]foo.js``` Change thees rules at your own risk!
 
 The last lines that we'll look at tell Inject to load Lu's core javascript, a default set of mappers, as well as to initialize Lu when the document is ready. Changes to the DOM after ```domready```, are picked up automatically. See our guide to mappers for more information on this.
 

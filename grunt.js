@@ -49,7 +49,7 @@ module.exports = function(grunt) {
     },
     concat: {
       config: {
-        src: ['<banner>', 'scripts/config.js'],
+        src: ['scripts/config.js'],
         dest: 'dist/<%= pkg.version %>/config.js'
       }
     },

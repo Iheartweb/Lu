@@ -148,7 +148,7 @@ The unordered list is marked with the attribute ```data-lu="List"```. A ```List`
 <ol role="tablist" data-lu="List"></ol>
 ```
 
-The first ```li``` is selected and marked with the ```data-lu="Switch"``` attribute. A Switch is a component that is stateful, in this case the state is 'selected'.
+The first ```li``` is selected and marked with the ```data-lu="Switch"``` attribute. A ```Switch``` is a component that is stateful, in this case the state is 'selected'.
 ```html
 <li role="tab" class="lu-state-selected" data-lu="Switch"></li>
 ```

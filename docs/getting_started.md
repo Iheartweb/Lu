@@ -150,8 +150,14 @@ The unordered list is marked with the attribute ```data-lu="List"```. A ```List`
 
 The first ```li``` is selected and marked with the ```data-lu="Switch"``` attribute. A Switch is a component that is stateful, in this case the state is 'selected'.
 ```html
-<li role="tab" class="lu-state-selected" data-lu="Switch">
-  <a href="#sherlock" data-lu="Button:Select" aria-controls="sherlock">Sherlock</a>
-</li>
+<li role="tab" class="lu-state-selected" data-lu="Switch"></li>
 ```
+
+Each of the tabs contain an anchor with the attribute ```data-lu="Button:Select"```. A ```Button``` is a component that takes a native event like 'click' and transforms it into somthing meaninful. ```Button:Select``` transforms a tells a statefule component to set it's state to 'selected' when clicked.
+The ```aria-controls``` attribute informs Lu that both the tab and the tab panel need to be selected when clicked. 
+```html
+<a href="#sherlock" data-lu="Button:Select" aria-controls="sherlock">Sherlock</a>
+```
+
+
 

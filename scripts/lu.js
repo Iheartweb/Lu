@@ -1,303 +1,228 @@
-/**
- * Lu's main class
- * @class Lu
- * @constructor
- * @require inject
- * @param {Object} settings Configuration properties for this instance
- */
-var Lu = function(){
-  var self = this;
+define('lu/Lu', function () {
+  var CONSTANTS = require('lu/constants'),
+    $cache = $([]),
+    Class,
+    Lu;
+
+  if (!Lu) {
+    Class = Fiber.extend(function () {
+      var defaults = {
+        debug: 0
+      },
+      maps = [];
+
+      return {
+        init: function (settings) {
+          settings = settings || {};
+          _.defaults(settings, defaults);
+        },
+        execute: function (element) {
+          var deferrals = [];
+          _.each(maps, function (map) {
+            deferrals.push(map.execute(element));
+          });
+          return $.when.apply($, deferrals);
+        },
+        register: function (map) {
+          maps.push(map);
+          return this;
+        },
+        map: function (element) {
+          _.each(maps, function (Map) {
+            Map.process(element);
+          });
+          return this;
+        }
+      };
+    });
+    Lu = new Class();
+  }
+
+  //Core Helpers
 
   /**
-   * Loads and instantiates components.
-   * @public
+   * Returns a components object containing all components mapped to a node.
+   * Available through $.lu jQuery plug-in.
+   * @method getComponents
+   * @private
    * @static
-   * @method execute
-   * @param {Object} $element a jQuery collection
-   * @return {Object} The executed element (allows chaining)
+   * @return {Object} The Lu components associated with the given element
    */
-  this.execute = function( $element ){
-    var $nodes = $element,
-      deferral = $.Deferred(),
-      requirements = [],
-      count;
+  function getComponents() {
+    var components = CONSTANTS.components.dataKey,
+      $this = $(this);
 
-    /**
-     * Instantiates a control with selected element.
-     * @method execute
-     * @private
-     * @param {Array} $node A jQuery collection with the selected elements.
-     * @param {String} key The name of the Control.
-     * @param {Function} Control The Control's constructor.
-     * @return {Void}
-     */
-    function execute( $element ){
-      var components = $element.lu( 'getComponents' );
+    if ($this.length > 0) {
+      return $this.data(components) || $this.data(components, {}).data(components);
+    } else {
+      return {};
+    }
+  }
 
-      //no components were found so there is nothing to do
-      if( components.length === 0 ){
-        deferral.resolve();
-      }
-      _.each( components, function( component, key ){
-        var requirement = 'lu/' + key,
-          settings = component.settings;
+  /**
+   * Returns a component.
+   * Available through $.lu jQuery plug-in.
+   * @method getComponents
+   * @private
+   * @static
+   * @param {String} id the component's Id
+   * @return {Object} The Lu component associated with the given element
+   */
+  function getComponent(id) {
+    var components = $(this).lu('getComponents');
+    return components[id];
+  }
 
-        if( _.indexOf( requirements, requirement ) === -1 ){
-          requirements.push( requirement );
-        }
+  /**
+   * Gets the mapped parents of the passed in $element.
+   * Available through $.lu jQuery plug-in.
+   * @method getParents
+   * @public
+   * @return {Object} A jQuery collection representing the parents
+   */
+  function getParents() {
+    return $(this).parents().filter($cache);
+  }
 
-        count -= 1;
+  /**
+   * Gets the mapped descendants of the passed in $element. Available through $.lu jQuery plug-in.
+   * @method getDescendants
+   * @public
+   * @return {Object} A Jquery collection of the descendants
+   */
+  function getDescendants() {
+    return $(this).find($cache);
+  }
 
-        deferral.then( function( required, module, exports ){
-          var Component = require( requirement ),
-            dependenciesResolved = false;
+  /**
+   * Gets the mapped children of the passed in $element. Accessible
+   * through $.lu.
+   * @return {array}
+   */
+  function getChildren() {
+    return $(this).children($cache);
+  }
 
-          if( component.hasDependencies ){
-            $element.one( 'lu:dependencies-resolved', function( event, instance ){
-              event.stopPropagation();
-              dependenciesResolved = true;
-            } );
-          }
+  /**
+   * Observe a jQuery collection with an observer. Observers are
+   * stored in an $element's data.  Accessible through $.lu. 
+   * @param  {array} $observer a jQuery collection.
+   * @return {array}
+   */
+  function observe($observer) {
+    var $this = $(this),
+      $observers = $this.data('$observers');
 
-          component.instance = new Component( $element, settings );
-
-          if( dependenciesResolved ){
-            component.deferral.resolve( component.instance );
-          } else if( !dependenciesResolved && component.hasDependencies ){
-            component.instance.one( 'dependencies-resolved', function( event, instance ){
-              event.stopPropagation();
-              component.deferral.resolve( component.instance );
-            } );
-          } else {
-            component.deferral.resolve( component.instance );
-          }
-
-        } );
-
-        if( count === 0 ){
-          require.ensure( requirements, function( required, module, exports ){
-            deferral.resolve( required, module, exports );
-          } );
-        }
-
-      } );
+    if (!$observers) {
+      return $this.data('$observers', $observer);
     }
 
-    if( $element.data( 'mapped' ) ){
-      $nodes = $nodes.add( $element );
+    $observers = $observers.add($observer.not($observers));
+    $this.data('$observers', $observers);
+
+    return $this;
+  }
+
+  /**
+   * Remove an observer from an $element. Accessible through $.lu.
+   * @param  {array} $observer a jQuery collection
+   * @return {array}
+   */
+  function detatch($observer) {
+    var $this = $(this),
+      $observers = $this.data('$observers');
+
+    if ($observers) {
+      $observers = $observers.not($observer);
     }
 
-    count = $nodes.length;
+    $this.data('$observers', $observers);
 
-    _.each( $nodes, function( item, index ){
-      execute( $( item ) );
-    } );
-
-    return deferral;
-  };
-};
-
-Lu = window.Lu = new Lu();
-
-/**
- * Returns a components object containing all components mapped to a node.
- * Available through $.lu jQuery plug-in.
- * @method getComponents
- * @private
- * @static
- * @param {Object} $element a jQuery collection
- * @return {Object} The Lu components associated with the given element
- */
-function getComponents( $element ){
-  var components = 'components';
-  if( $element.length > 0 ){
-    return $element.data( components ) || $element.data( components, {} ).data( components );
-  } else {
-    return {};
-  }
-}
-
-/**
- * Returns a component.
- * Available through $.lu jQuery plug-in.
- * @method getComponents
- * @private
- * @static
- * @param {Object} $element a jQuery collection
- * @param {String} $element the components key
- * @return {Object} The Lu component associated with the given element
- */
-function getComponent( $element, key ){
-  var components = $element.lu( 'getComponents' );
-  return components[key];
-}
-
-/**
- * Gets the mapped parents of the passed in $element.
- * Available through $.lu jQuery plug-in.
- * @method getParents
- * @public
- * @static
- * @param {Object} $element a jQuery collection
- * @return {Object} A jQuery collection representing the parents
- */
-function getParents( $element ){
-  return $element.parents().filter( Lu.$mapped );
-}
-
-/**
- * Gets the mapped descendants of the passed in $element. Available through $.lu jQuery plug-in.
- * @method getDescendants
- * @public
- * @static
- * @param {Object} $element a jQuery collection
- * @return {Object} A Jquery collection of the descendants
- */
-function getDescendants( $element ){
-  return $element.find( Lu.$mapped );
-}
-
-/**
- * Gets the mapped children of the passed in $element. Available through $.lu jQuery plug-in.
- * @method getChildren
- * @public
- * @static
- * @param {Object} $element a jQuery collection
- * @return {Object} A jQuery collection of the children
- */
-function getChildren( $element ){
-  return $element.children( Lu.$mapped );
-}
-
-/**
- * Add an $observer to an $element. Observers are added in $.data as $observers.
- * Available through $.lu jQuery plug-in.
- * @public
- * @static
- * @method observe
- * @param {Object} $element a jQuery collection
- * @param {Object} $observer a jQuery collection
- * @return {Object} The target element (allows chaining)
- */
-function observe( $element, $observer ){
-  var $observers = $element.data( '$observers' );
-
-  if( !$observers ){
-    return $element.data( '$observers', $observer );
+    return $this;
   }
 
-  $observers = $observers.add( $observer.not( $observers ) );
-  $element.data( '$observers', $observers );
+   /**
+    * Notifies observers of an event. Accessible through $.lu.
+    * @param  {String} event      The Name of the event
+    * @param  {Array} parameters An array of parameters to pass to event listeners
+    * @return {Object}
+    */
+  function notify(event, parameters) {
+    var $this = $(this),
+      $observers = $this.data('$observers');
 
-  return $element;
-}
+    if ($observers) {
+      _.each($observers, function (observer) {
+        var $observer = $(observer),
+          components = $observer.lu('getComponents');
 
-/**
- * Remove an observer from an $element. Available through $.lu jQuery plug-in.
- * @public
- * @static
- * @method unobserve
- * @param {Object} $element a jQuery collection
- * @param {Object} $observer a jQuery collection
- * @return {Object} The target element (allows chaining)
- */
-function unobserve( $element, $observer ){
-  var $observers = $element.data( '$observers' );
+        _.each(components, function (component) {
+          var deferral = component.deferral;
+          deferral.then(function () {
+            var instance = component.instance;
+            if (_.indexOf(instance.events(), event) > -1) {
+              instance.trigger.call(instance, new $.Event(event, {
+                target: $this
+              }), parameters);
+            }
+          });
+        });
 
-  if( $observers ){
-    $observers = $observers.not( $observer );
+      });
+    }
+    return $this;
   }
 
-  $element.data( '$observers', $observers );
+  (function ($) {
+    //Bind utility methods to jQuery as a plug-in
+    $.fn.lu = function (method) {
+      var parameters = Array.prototype.slice.call(arguments),
+        method = parameters[0],
+        retrn;
 
-  return $element;
-}
+      parameters.splice(0, 1);
 
-/**
- * Notifies observers of events. Available through $.lu jQuery plug-in.
- * @public
- * @static
- * @method notify
- * @param {Object} $element a jQuery collection
- * @param {string} event the event type
- * @param {Array} $element extra arguments associated with the event
- * @return {Object} The target element (allows chaining)
- */
-function notify( $element, event, parameters ){
-  var $observers = $element.data( '$observers' );
+      $cache = $cache.add(this);
 
-  if( $observers ){
-    _.each( $observers, function( observer, index ){
-      var $observer = $( observer ),
-        components = $observer.lu( 'getComponents' ),
-        deferrals = [];
-      _.each( components, function( component, key ){
-        var deferral = component.deferral;
-        deferral.then( function(){
-          var instance = component.instance;
-          if( _.indexOf( instance.events(), event ) > -1 ){
-            instance.trigger.call( instance, new $.Event( event, { target: $element } ), parameters );
-          }
-        } );
-
-      } );
-
-    } );
-  }
-  return $element;
-}
-
-( function( $ ){
-  //Bind utility methods to jQuery as a plug-in
-  $.fn.lu = function(){
-    var $this = $( this ),
-      parameters = Array.prototype.slice.call( arguments ),
-      method = parameters[0],
-      retrn;
-
-    parameters[0] = $this;
-
-    switch( method ){
+      switch (method) {
       case 'observe':
-        retrn = observe.apply( $this, parameters );
+        retrn = observe.apply(this, parameters);
         break;
-      case 'unobserve':
-        retrn = unobserve.apply( $this, parameters );
+      case 'detatch':
+        retrn = detatch.apply(this, parameters);
         break;
       case 'notify':
-        retrn = notify.apply( $this, parameters );
+        retrn = notify.apply(this, parameters);
         break;
       case 'getComponents':
-        retrn = getComponents.apply( $this, parameters );
+        retrn = getComponents.apply(this, parameters);
         break;
-     case 'getComponent':
-        retrn = getComponent.apply( $this, parameters );
+      case 'getComponent':
+        retrn = getComponent.apply(this, parameters);
         break;
       case 'getParents':
-        retrn = getParents.apply( $this, parameters );
+        retrn = getParents.call(this, $cache);
         break;
       case 'getDescendants':
-        retrn = getDescendants.apply( $this, parameters );
+        retrn = getDescendants.call(this, $cache);
         break;
       case 'getChildren':
-        retrn = getChildren.apply( $this, parameters );
+        retrn = getChildren.call(this, $cache);
+        break;
+      case 'execute':
+        retrn = Lu.execute($(this));
+        break;
+      case 'map':
+        Lu.map($(this));
+        retrn = this;
         break;
       default:
-        throw new Error( 'No such method.' );
-    }
+        throw new Error('No such method.');
+      }
 
-    return retrn;
-  };
-}( window.jQuery ) );
+      return retrn;
+    };
+  }(jQuery));
 
-
-//Export to Common JS Loader
-if( typeof module !== 'undefined' ){
-  if( typeof module.setExports === 'function' ){
-    module.setExports( Lu );
-  } else if( module.exports ){
-    module.exports = Lu;
-  }
-}
-
-//Don't do Gilligan's Island if you want to be a serious actress!
+  return Lu;
+});

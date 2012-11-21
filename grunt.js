@@ -4,6 +4,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig( {
     pkg: '<json:package.json>',
+    jshint: '<json:.jshintrc>',
     componentPath: 'components',
     meta: {
       banner: '/**' +

@@ -1,11 +1,11 @@
-define('lu/constants', function () {
+define(function () {
   return {
     components: {
-      prefix: 'lu/components/',
+      prefix: 'components/',
       dataKey: 'lu-components',
     },
     maps: {
-      prefix: 'lu/map/'
+      prefix: 'maps/'
     },
     states: {
       'prefix': 'lu-state-'

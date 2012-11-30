@@ -1,26 +1,25 @@
-define('Tabpanel', function () {
+define('Region', function () {
   /**
-   * Provides a mechanism for selecting
-   * the tab content that is to be rendered to the user.
-   * @class Tabpanel
+   * An abstract component that creates a heading to content relationship 
+   * @class Region
    * @extends {Section}
    */
-  var Tabpanel,
+  var Region,
   /**
-   * @type {Widget}
+   * @type {Section}
    */
-  Widget = require('Section');
+  Section = require('Section');
 
-  Tabpanel = Widget.extend(function (base) {
+  Region = Base.extend(function (base) {
     /**
-     * An map of defaults for instances of Tabpanel
+     * An map of defaults for instances of Region
      * @type {Object}
      */
     var defaults = {};
 
     return {
       /**
-       * Constructs Tabpanel
+       * Constructs Region
        * @param {jQuery} $element A jQuery collection.
        * @param {Object} settings @optional A settings object.
        * @constructor
@@ -33,5 +32,5 @@ define('Tabpanel', function () {
     };
   });
 
-  return Tabpanel;
+  return Region;
 });

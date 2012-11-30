@@ -1,26 +1,25 @@
-define('Tabpanel', function () {
+define('Input', function () {
   /**
-   * Provides a mechanism for selecting
-   * the tab content that is to be rendered to the user.
-   * @class Tabpanel
-   * @extends {Section}
+   * A generic type of widget that allows user input.
+   * @class Input
+   * @extends {Widget}
    */
-  var Tabpanel,
+  var Input,
   /**
    * @type {Widget}
    */
-  Widget = require('Section');
+  Widget = require('Widget');
 
-  Tabpanel = Widget.extend(function (base) {
+  Input = Widget.extend(function (base) {
     /**
-     * An map of defaults for instances of Tabpanel
+     * An map of defaults for instances of Input
      * @type {Object}
      */
     var defaults = {};
 
     return {
       /**
-       * Constructs Tabpanel
+       * Constructs Input
        * @param {jQuery} $element A jQuery collection.
        * @param {Object} settings @optional A settings object.
        * @constructor
@@ -33,5 +32,5 @@ define('Tabpanel', function () {
     };
   });
 
-  return Tabpanel;
+  return Input;
 });

@@ -1,53 +1,40 @@
-define('Tablist', function () {
+define('Section', function () {
   /**
-   * Provides a mechanism for selecting
-   * the tab content that is to be rendered to the user.
-   * @class Tablist
-   * @extends {Widget}
+   * An expandable section of content
+   * @class Section
+   * @extends {Structure}
    */
-  var Tablist,
-
+  var Section,
   /**
-   * @type {Composite}
+   * @type {Structure}
    */
-  Composite = require('Composite'),
-
+  Structure = require('Structure'),
   /**
    * An imported decorator to support the expanded state
-   * @type {Function}
+   * @type {function}
    */
   expandedStateDecorator = require('decorators/expandedState');
 
-  Tablist = Composite.extend(function (base) {
+  Section = Base.extend(function (base) {
     /**
-     * An map of defaults for instances of Tablist
+     * An map of defaults for instances of Section
      * @type {Object}
      */
-    var defaults = {
-      items: '[role~=tab]'
-    };
+    var defaults = {};
 
     return {
       /**
-       * Constructs Tablist
+       * Constructs Section
        * @param {jQuery} $element A jQuery collection.
        * @param {Object} settings @optional A settings object.
        * @constructor
        */
       init: function ($element, settings) {
-        var self = this;
-
         settings = settings || {};
         _.defaults(settings, defaults);
         base.init.call(this, $element, settings);
 
         Fiber.decorate(this, expandedStateDecorator);
-
-        //calls the expand method
-        this.on('expand', function (event) {
-          event.stopPropagation();
-          self.expand();
-        });
 
         //setup the selected state on instantiation
         if (this.isExpanded()) {
@@ -57,5 +44,5 @@ define('Tablist', function () {
     };
   });
 
-  return Tablist;
+  return Section;
 });

@@ -1,26 +1,26 @@
-define('Tabpanel', function () {
+define('ProgressBar', function () {
   /**
-   * Provides a mechanism for selecting
-   * the tab content that is to be rendered to the user.
-   * @class Tabpanel
-   * @extends {Section}
+   * A form of range that expects the user to select from among discrete
+   * choices.
+   * @class ProgressBar
+   * @extends {Range}
    */
-  var Tabpanel,
+  var ProgressBar,
   /**
-   * @type {Widget}
+   * @type {Range}
    */
-  Widget = require('Section');
+  Range = require('Range');
 
-  Tabpanel = Widget.extend(function (base) {
+  ProgressBar = Range.extend(function (base) {
     /**
-     * An map of defaults for instances of Tabpanel
+     * An map of defaults for instances of ProgressBar
      * @type {Object}
      */
     var defaults = {};
 
     return {
       /**
-       * Constructs Tabpanel
+       * Constructs ProgressBar
        * @param {jQuery} $element A jQuery collection.
        * @param {Object} settings @optional A settings object.
        * @constructor
@@ -33,5 +33,5 @@ define('Tabpanel', function () {
     };
   });
 
-  return Tabpanel;
+  return ProgressBar;
 });

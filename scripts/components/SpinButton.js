@@ -1,26 +1,26 @@
-define('Tabpanel', function () {
+define('SpinButton', function () {
   /**
-   * Provides a mechanism for selecting
-   * the tab content that is to be rendered to the user.
-   * @class Tabpanel
-   * @extends {Section}
+   * A form of range that expects the user to select from among discrete
+   * choices.
+   * @class SpinButton
+   * @extends {Input}
    */
-  var Tabpanel,
+  var SpinButton,
   /**
-   * @type {Widget}
+   * @type {Range}
    */
-  Widget = require('Section');
+  Range = require('Range');
 
-  Tabpanel = Widget.extend(function (base) {
+  SpinButton = Range.extend(function (base) {
     /**
-     * An map of defaults for instances of Tabpanel
+     * An map of defaults for instances of SpinButton
      * @type {Object}
      */
     var defaults = {};
 
     return {
       /**
-       * Constructs Tabpanel
+       * Constructs SpinButton
        * @param {jQuery} $element A jQuery collection.
        * @param {Object} settings @optional A settings object.
        * @constructor
@@ -33,5 +33,5 @@ define('Tabpanel', function () {
     };
   });
 
-  return Tabpanel;
+  return SpinButton;
 });

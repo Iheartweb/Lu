@@ -1,42 +1,72 @@
-/**
- * @class Tab
- * @extends Abstract
- */
+define('Tab', function () {
+  /**
+   * Provides a mechanism for selecting the tab content that is to be rendered
+   * to the user.
+   * @class Tab
+   * @extends {Widget}
+   */
+  var Tab,
+  /**
+   * @type {Widget}
+   */
+  Widget = require('Widget'),
+  /**
+   * An imported decorator to support the selected state
+   * @type {function}
+   */
+  selectedStateDecorator = require('decorators/selectedState'),
+  /**
+   * An imported decorator to support the expanded state
+   * @type {function}
+   */
+  expandedStateDecorator = require('decorators/expandedState');
 
-define('lu/components/Tab', function () {
-  var Abstract = require('lu/components/Abstract/Abstract'),
-    Switch = require('lu/components/Switch/Switch'),
-    selected = require('lu/components/Switch/states/selected');
+  Tab = Widget.extend(function (base) {
+    /**
+     * An map of defaults for instances of Tab
+     * @type {Object}
+     */
+    var defaults = {};
 
-  return Abstract.extend(function (base) {
-    var defaults = {
-      states: null
-    };
     return {
+      /**
+       * Constructs Tab
+       * @param {jQuery} $element A jQuery collection.
+       * @param {Object} settings @optional A settings object.
+       * @constructor
+       */
       init: function ($element, settings) {
-        var AdaptedSwitch;
-
-        _.defaults(settings || {}, defaults);
+        settings = settings || {};
+        _.defaults(settings, defaults);
         base.init.call(this, $element, settings);
 
-        AdaptedSwitch = new Switch($element, settings);
-        Fiber.decorate(AdaptedSwitch, selected);
+        Fiber.decorate(this, selectedStateDecorator);
+        Fiber.decorate(this, expandedStateDecorator);
 
-        this.disable = function(){
-          AdaptedSwitch.select();
-          return this;
-        };
+        //calls the select method
+        this.on('select', function (event) {
+          event.stopPropagation();
+          self.select();
+        });
 
-        this.enable = function(){
-          AdaptedSwitch.deselect();
-          return this;
-        };
+        //calls the expand method
+        this.on('expand', function (event) {
+          event.stopPropagation();
+          self.expand();
+        });
 
-        this.isSelected = function() {
-          return AdaptedSwitch.isSelected();
-        };
+        //setup the selected state on instantiation
+        if (this.isSelected()) {
+          self.select();
+        }
 
+        //setup the selected state on instantiation
+        if (this.isExpanded()) {
+          self.expand();
+        }
       }
     };
   });
+
+  return Tab;
 });

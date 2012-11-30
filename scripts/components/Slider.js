@@ -1,26 +1,25 @@
-define('Tabpanel', function () {
+define('Slider', function () {
   /**
-   * Provides a mechanism for selecting
-   * the tab content that is to be rendered to the user.
-   * @class Tabpanel
-   * @extends {Section}
+   * A user input where the user selects a value from within a given range.
+   * @class Slider
+   * @extends {Input}
    */
-  var Tabpanel,
+  var Slider,
   /**
-   * @type {Widget}
+   * @type {Range}
    */
-  Widget = require('Section');
+  Range = require('Range');
 
-  Tabpanel = Widget.extend(function (base) {
+  Slider = Range.extend(function (base) {
     /**
-     * An map of defaults for instances of Tabpanel
+     * An map of defaults for instances of Slider
      * @type {Object}
      */
     var defaults = {};
 
     return {
       /**
-       * Constructs Tabpanel
+       * Constructs Slider
        * @param {jQuery} $element A jQuery collection.
        * @param {Object} settings @optional A settings object.
        * @constructor
@@ -33,5 +32,5 @@ define('Tabpanel', function () {
     };
   });
 
-  return Tabpanel;
+  return Slider;
 });

@@ -1,4 +1,4 @@
-define('lu/supports', function () {
+define(function () {
   return {
     touchEvents: (function () {
       return 'touchstart' in document.documentElement;

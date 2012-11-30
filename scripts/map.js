@@ -1,13 +1,9 @@
-define('lu/Map', function () {
-  var CONSTANTS = require('lu/constants'),
-    Map;
-
-  Map = Fiber.extend(function () {
-    var Lu = require('lu/Lu'),
-      defaults = {
-        autoExecute: false,
-        executeOnEvent: null
-      };
+define(['Lu', 'Fiber', 'constants', 'utilities'], function (Lu, Fiber, CONSTANTS, UTILITIES) {
+  return Fiber.extend(function () {
+    var defaults = {
+      autoExecute: false,
+      executeOnEvent: null
+    };
 
     function register(map) {
       Lu.register(map);
@@ -27,14 +23,7 @@ define('lu/Map', function () {
       process: function (element) {
         var directives = this.directives,
           id = this.id,
-          $element;
-
-        //Coerce the the element into a jQuery Collection
-        if (element instanceof $) {
-          $element = element;
-        } else {
-          $element = $(element);
-        }
+          $element = UTILITIES.$(element);
 
         _.each($element, function (element) {
           var $element = $(element),
@@ -63,9 +52,9 @@ define('lu/Map', function () {
                   ready: deferral.then,
                   settings: {}
                 };
-                //this structure means that only one component of a base type can be instantiated.
-                //This is fine as long as our decoration logic exists within
-                //the mappers and not the component itself
+                //this structure means that only one component of a base type
+                //can be instantiated. This is fine as long as our decoration
+                //logic exists within the mappers and not the component itself
                 data[id] = component;
 
                 //set everything back on the data object.
@@ -86,20 +75,12 @@ define('lu/Map', function () {
             }
           });
         });
-
       },
       execute: function (element) {
         var deferral = $.Deferred(),
           requires = [],
           queue = [],
-          $element;
-
-        //Coerce the the element into a jQuery Collection
-        if (element instanceof $) {
-          $element = element;
-        } else {
-          $element = $(element);
-        }
+          $element = UTILITIES.$(element);
 
         //For each element get its components
         _.each($element, function (item) {
@@ -108,7 +89,6 @@ define('lu/Map', function () {
 
           //For each component queue it up and update its status
           _.each(components, function (component, id) {
-
             //only process components that have a status of mapped
             if (component.status === 'mapped') {
               id = CONSTANTS.components.prefix + id;
@@ -132,15 +112,16 @@ define('lu/Map', function () {
           });
         });
 
-        //We've gathered all component information so let's load the necessary scripts
-        require.ensure(requires, function (require) {
+        //We've gathered all component information so let's load the necessary
+        //scripts
+        require(requires, function () {
           _.each(queue, function (item) {
             var component = item.component,
               Export;
 
             //only process components that have a status of queued
             if (component.status === 'queued') {
-              Export = require(item.id);
+              Export = require([item.id]);
               component.instance = new Export($element, component.settings);
               component.deferral.resolveWith(component.instance);
               component.status = 'ready';
@@ -187,6 +168,4 @@ define('lu/Map', function () {
       }
     };
   });
-
-  return Map;
 });

@@ -1,26 +1,26 @@
-define('Tabpanel', function () {
+define('Command', function () {
   /**
-   * Provides a mechanism for selecting
-   * the tab content that is to be rendered to the user.
-   * @class Tabpanel
-   * @extends {Section}
+   * An interactive component that transforms a native event into a custom
+   * event useful to other components.
+   * @class Command
+   * @extends {Widget}
    */
-  var Tabpanel,
+  var Command,
   /**
    * @type {Widget}
    */
-  Widget = require('Section');
+  Widget = require('Widget');
 
-  Tabpanel = Widget.extend(function (base) {
+  Command = Widget.extend(function (base) {
     /**
-     * An map of defaults for instances of Tabpanel
+     * An map of defaults for instances of Command
      * @type {Object}
      */
     var defaults = {};
 
     return {
       /**
-       * Constructs Tabpanel
+       * Constructs Command
        * @param {jQuery} $element A jQuery collection.
        * @param {Object} settings @optional A settings object.
        * @constructor
@@ -33,5 +33,5 @@ define('Tabpanel', function () {
     };
   });
 
-  return Tabpanel;
+  return Command;
 });

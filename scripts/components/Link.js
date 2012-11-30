@@ -1,19 +1,19 @@
-define('Button', function () {
+define('Link', function () {
   /**
    * An interactive component that transforms a native event into a custom
    * event useful to other components.
-   * @class Button
+   * @class Link
    * @extends {Command}
    */
-  var Button,
+  var Link,
   /**
    * @type {Command}
    */
   Command = require('Command');
 
-  Button = Command.extend(function (base) {
+  Link = Command.extend(function (base) {
     /**
-     * An map of defaults for instances of Button
+     * An map of defaults for instances of Link
      * @type {Object}
      */
     var defaults = {
@@ -28,8 +28,8 @@ define('Button', function () {
        * The time in milliseconds in which to throttle events.
        * Events will only be triggred once per throttle time.
        * This is useful when timing complex css transitions.
-       * @property throttle
        * @default 100
+       * @property throttle
        * @type {Number}
        */
       throttle: 100
@@ -37,7 +37,7 @@ define('Button', function () {
 
     return {
       /**
-       * Constructs Button
+       * Constructs Link
        * @param {jQuery} $element A jQuery collection.
        * @param {Object} settings @optional A settings object.
        * @constructor
@@ -55,5 +55,5 @@ define('Button', function () {
     };
   });
 
-  return Button;
+  return Link;
 });

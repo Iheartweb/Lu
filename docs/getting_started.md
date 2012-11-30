@@ -1,5 +1,7 @@
 # Getting Started with Lu
 
+** Note this guide is written for the versions 0.4.x+ **
+
 Lu is a library that leverages semantics to describe interaction. This allows HTML authors to write rich interfaces without writing javascript.
 
 Lu comes with a growing set of components. Each represents a building block of interactivity and is usually bound to markup through the use of a `data-lu` attribute. Components can be mixed, matched, rearranged, and re-purposed to build a wide variety of interfaces.
@@ -7,111 +9,59 @@ Lu comes with a growing set of components. Each represents a building block of i
 In this guide I'll talk about the steps needed to create a tabbed interface. We'll start by getting to know Lu's dependencies. We'll get Lu on your page and configure it. We'll write HTML that describes the desired interaction. Then, we'll give our tabs some style.
 
 ##Dependencies
-Lu leverages a toolkit that includes <a href="http://www.jquery.com" target="_blank">jQuery</a> and <a href="http://documentcloud.github.com/underscore/" target="_blank">Underscore</a>, as well as a <a href="https://github.com/linkedin/inject/" target="_blank">CommonJS Loader</a>, and inheritance through <a href="https://github.com/linkedin/fiber/" target="_blank">Fiber</a>. I'll provide a brief description of each here. For more in-depth information see the <a href="#">architectural primer</a>. 
+Lu leverages a toolkit that includes <a href="http://www.jquery.com" target="_blank">jQuery</a> and <a href="http://documentcloud.github.com/underscore/" target="_blank">Underscore</a>, a CommonJS Loader (<a href="http://requirejs.org/" target="_blank">requireJS</a>), and <a href="https://github.com/linkedin/fiber/" target="_blank">Fiber</a>. I'll provide a brief description of each here. For more in-depth information see the <a href="#">architectural primer</a> (Coming Soon!). 
 
 ###jQuery and Underscore###
 You've probably have heard of jQuery, but may have not heard of Underscore. Underscore is a utility belt that provides methods for working with objects, collections, and arrays. Because jQuery's ```$( '.selector' )``` returns an array, Underscore and jQuery are a powerful pair. Lu uses them to manipulate and read HTML. It uses them to map components to markup. And, to wire communication between them.
 
 ###CommonJS###
-All Lu components are modular; they're commonJS (AMD) compliant. This means that they are loaded on the fly as needed. There are a lot of commonJS loaders out there. We use Inject, but also test Lu with requireJS and curl. If your already using one of those, great!
-
-If your not already using a commonJS loader, we encourage the use of Inject. Inject goes above and beyond most other loaders. It gives us improved caching as well as loading of scripts across domains. Also, as modularity is central to Lu's architecture, the Lu team works closely with the Inject team and contributes code on a regular basis.
+All Lu components are modular; they're AMD compliant. This means that they are loaded on the fly as needed. There are a lot of commonJS loaders out there. We use RequireJS for it's dependability and ease of use.
 
 ###Inheritance###
-While creating Lu, the team researched and used a plethora of inheritance models including <a href="#" target="_blank">Simple JavaScript Inheritance</a>, a underscore based variation inspired by backbone, <a href="#" target="_blank">Klass</a> and <a href="#" target="_blank">Class</a>. Nothing we looked at provided the right amount of sugar without obfuscating code or was fast enough. So, we created one and rolled it out as <a href="#">Fiber</a>.
+While creating Lu, the team researched and used a plethora of inheritance models including <a href="#" target="_blank">Simple JavaScript Inheritance</a>, a underscore based variation inspired by backbone, <a href="#" target="_blank">Klass</a> and <a href="#" target="_blank">Class</a>. Nothing we looked at provided the right amount of sugar without obfuscating code or was fast enough. So, we created one and rolled it out as <a href="https://github.com/linkedin/Fiber" target="_blank">Fiber</a>.
 
-Fiber provides Lu with a lightweight and <a href="#" target="_blank">fast</a> way to describe inheritance between components. Read about how its used to <a href="#">structure</a> Lu's components.
+Fiber provides Lu with a lightweight and <a href="http://jsperf.com/js-inheritance-performance" target="_blank">fast</a> way to describe inheritance between components. Read about how its used to <a href="component_anatomy.md">structure</a> Lu's components.
 
 ###Script Inclusion###
 
-Start by downloading Lu and all of the dependencies: <a href="#">Lu</a>, <a href="#">jQuery</a>, <a href="#">Underscore</a>, <a href="#">Fiber</a>, <a href="#">Inject</a>.
+Start by downloading Lu and all of the dependencies: <a href="#">Lu</a>(Needs updating with 0.4.x release), <a href="http://www.jquery.com" target="_blank">jQuery</a>, <a href="http://underscorejs.org/" target="_blank">Underscore</a>, <a href="https://github.com/linkedin/Fiber" target="_blank">Fiber</a>, <a href="http://www.requirejs.org" target="_blank">RequireJS</a>.
 
 Once you have everything downloaded make sure you have the following scripts to your page:
 
 ```html
-<script src="[path_to_inject].js"/>
+<script src="[path_to_requirejs].js"/>
 <script src="[path_to_jquery].js"/>
 <script src="[path_to_underscore]"/>
-<script src="[path_to_fiber]"/>
 ```
-**jQuery, Fiber, and Underscore are commonJS compliant. You could manage the loading of these libraries with Inject.**
+**You may have noticed Fiber is not included via a script tag. Fiber is fully AMD complaint and is loaded asynchronously**
 
 The last script we need to add is a bootstrap and is discussed in the next section.
 
 ```html
-<script src="[path_to_lu-config]"/>
+<script src="[path_to_bootstrap]"/>
 ```
 
 ##Configuring Lu##
-In the aptly named ```lu-config.js``` there's a configuration for using Lu with Inject. The contents of this file look somthing like the below. For more advanced configuration, please refer to Inject's <a href="#" target="_blank">Getting Started Guide</a> or to the manual of your commonJS loader.
+In the aptly named ```bootstrap.js``` there's a bootstrap for telling RequireJS where Lu modules live. The contents of this file look something like the below. For more advanced configuration, please refer to the requireJS's <a href="https://github.com/jrburke/r.js/blob/master/build/example.build.js" target="_blank">sample file</a>.
 
 ```js
-( function() {
-
-  var PATH_TO_LU = '/scripts/libraries/lu/0.4.x/', 
-    PATH_TO_LU_COMPONENTS = PATH_TO_LU + 'components/',
-    PATH_TO_LU_MAPS = PATH_TO_LU + 'maps/';
-
-  if( window.Inject ) {
-    Inject.setModuleRoot('http://localhost/');
-    //Rule for Components
-    window.Inject.addRule( /^lu\//, {
-      path: function( module ) {
-        module = module.replace( 'lu/', '' );
-        return PATH_TO_LU_COMPONENTS + module + '.js';
-      }
-    } );
-    //Rule for Mappers
-    window.Inject.addRule( /^lu-maps\//, {
-      path: function( module ) {
-        module = module.replace( 'lu-maps/', '' );
-        return PATH_TO_LU_MAPS + module + '.js';
-      }
-    } );
-    //Rule for Lu core
-    window.Inject.addRule( /^lu/, {
-      path: function( module ) {
-        module = module.replace( 'lu-maps/', '' );
-        return PATH_TO_LU_MAPS + module + '.js';
-      }
-    } );
+//Configure requireJS to find Lu file and dependencies
+require.config({
+  baseUrl: '[base path to lu]',
+  paths: {
+    'Fiber': 'libraries/fiber/1.0.5/fiber'
   }
+});
 
-  require.ensure( ['lu', lu-map/Default'], function(){
-    $( function(){
-      Lu.execute( document );
-    } );
-  } );
+// Load some default mappers
+require(['maps/Button', 'maps/Tab', 'maps/Tablist', 'maps/Tabpanel'], function () {});
 
-} () );
 ```
+The base path to lu should be replaced with the path of lu on your server. This might be something like `/scripts/libs/lu/`.
 
-Let's take apart this configuration and look at the important parts.
+The require method call loads files that tell what to look for in HTML. You can load more maps here as you use them or load them when needed.
 
-These lines are used to set the path to lu components. Edit them to point to your copy of Lu.
-```js
-var PATH_TO_LU = '/scripts/libraries/lu/0.4.x/', 
-  PATH_TO_LU_COMPONENTS = PATH_TO_LU + 'components/',
-  PATH_TO_LU_MAPS = PATH_TO_LU + 'maps/';
-```
-
-This line tells Inject the host to request files from. Change them to point to the location of Lu on your server. If your loading Lu from a remote server please see the <a href="#">Inject guide</a> for cross domain loading.
-```js
-Inject.setModuleRoot('http://localhost/');
-```
-
-These rules tell Inject how to map commonJS module Ids to files. For example the id of 'lu/Foo' maps to ````[PATH_TO_LU_COMPONENTS]foo.js``` Change thees rules at your own risk!
-
-The last lines that we'll look at tell Inject to load Lu's core javascript, a default set of mappers, as well as to initialize Lu when the document is ready. Changes to the DOM after ```domready```, are picked up automatically. See our guide to mappers for more information on this.
-
-Depending on your implementation you may want to remove thees lines and put it in your application's javascript.
-```js
-require.ensure( ['lu', lu-map/Default'], function(){
-  $( function(){
-    Lu.execute( document );
-  } );
-} );
-```
+---
 
 If you've gotten this far the hard part is over. Let's write some HTML.
 
@@ -119,19 +69,18 @@ If you've gotten this far the hard part is over. Let's write some HTML.
 This markup is a tab implementation complete with Lu and aria role goodness.
 
 ```html
-<ol role="tablist" data-lu="List">
-  <li role="tab" class="lu-state-selected" data-lu="Switch">
-    <a href="#sherlock" data-lu="Button:Select" aria-controls="sherlock">Sherlock</a>
+<ul role="tablist">
+  <li role="tab" class="lu-state-selected" aria-selected="true" aria-controls="sherlock">
+    <a href="#sherlock" data-lu="Button:Select">Sherlock</a>
   </li>
-  <li role="tab">
-    <a href="#watson" data-lu="Button:Select" aria-controls="sherlock">Watson</a>
+  <li role="tab" aria-controls="watson">
+    <a href="#watson" data-lu="Button:Select">Watson</a>
   </li>
-  <li role="tab">
-    <a href="#sherlock" data-lu="Button:Select">Moriarty</a>
+  <li role="tab" aria-controls="moriarty">
+    <a href="#moriarty" data-lu="Button:Select">Moriarty</a>
   </li>
-</ol>
-
-<div id="sherlock" role="tabpanel" aria-selected="true" class="lu-state-selected">
+</ul>
+<div id="sherlock" role="tabpanel">
   <!-- Content -->
 </div>
 <div id="watson" role="tabpanel">
@@ -141,23 +90,42 @@ This markup is a tab implementation complete with Lu and aria role goodness.
   <!-- Content -->
 </div>
 ```
+Try this markup out in your browser. If you have an HTML inspector open you'll notice that as you click on the links the states of the tabpanels are updated.
 
+You'll also notice that the Tabs don't look very pretty. Lu focuses on interface behavior. If your looking for an easy to add a presentation on top of Lu, check out Archetype (link not yet public).
 
-The unordered list is marked with the attribute ```data-lu="List"```. A ```List``` is a component that manages the state of a set of elements. ```List``` ensures that one of the items in the set is selected and the others are not.
-```html
-<ol role="tablist" data-lu="List"></ol>
+The maps you loaded in the bootstrap look for some very specific things. Here's the contents of the map that tells Lu about ```data-lu="Button:Select"````.
+
+```js
+define(['Map', 'supports'], function (Map, SUPPORTS) {
+  var executionEvent = (SUPPORTS.touchEvents) ? 'touchstart' : 'click',
+    Button;
+
+  Button = new Map({id: 'Button', executeOnEvent: executionEvent});
+
+  Button.direct('[data-lu~=\"Button:Select\"]', function () {
+    this.settings.action = 'select';
+  });
+
+  return Button;
+});
 ```
+This file tells Lu to map the css selector: ```[data-lu~=\"Button:Select\"]``` to a ```Button``` components. It tells Lu to instantiate that component on click or touch.
 
-The first ```li``` is selected and marked with the ```data-lu="Switch"``` attribute. A ```Switch``` is a component that is stateful, in this case the state is 'selected'.
-```html
-<li role="tab" class="lu-state-selected" data-lu="Switch"></li>
-```
+Most importantly it tells gives Lu directions on how to setup the button when its instantiated. In this case it tells Lu to set the state of the tab to selected.
 
-Each of the tabs contain an anchor with the attribute ```data-lu="Button:Select"```. A ```Button``` is a component that takes a native event like 'click' and transforms it into somthing meaninful. ```Button:Select``` transforms a tells a statefule component to set it's state to 'selected' when clicked.
-The ```aria-controls``` attribute informs Lu that both the tab and the tab panel need to be selected when clicked. Lu alternativley looks at the ```href``` to determine what the anchor controls when the aria role is not present.
-```html
-<a href="#sherlock" data-lu="Button:Select" aria-controls="sherlock">Sherlock</a>
-```
+For information on other states that you can set see <a href="http://www.w3.org/TR/wai-aria/states_and_properties" target="_blank">Supported States and Properties</a>.
 
+For information on components see <a href="http://www.w3.org/TR/wai-aria/roles#widget_roles" target="_blank">Widget Roles</a> in section 5.3.2.
 
+Lu provides coverage of aria widget roles plus <a href="#" target="_blank">some extra compositions</a>(Pending) like <a href="#" target="_blank">Carousel</a>(Pending). As long as you markup your HTML with aria attributes, you'll only need to tell Lu about components that are directly interacted with.
 
+In a tabbed interface the component that is directly interacted with is are the anchors notated with ```data-lu="Button:Select"```. Other Buttons like ```data-lu="Button:Expand"``` are also loaded the Button Map.
+
+Lu also supports <a href="#" target="_blank">full declaration for all components</a>(Pending).
+
+To configure components, see the <a href="#" target="_blank">configuration guide</a>(Pending).
+
+For working examples of all aria components <a href="#" target="_blank">use.lu</a>(Pending).
+
+Enjoy!

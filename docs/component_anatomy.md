@@ -1,7 +1,7 @@
 # Lu Component Anatomy
 
 ## A Note on Documentation
-* TBD: JSDoc vs. YUIDoc
+*This document needs to be updated with the 0.4.x release
 
 ## Using Fiber
 

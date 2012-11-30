@@ -1,26 +1,26 @@
-define('Tabpanel', function () {
+define('TextBox', function () {
   /**
-   * Provides a mechanism for selecting
-   * the tab content that is to be rendered to the user.
-   * @class Tabpanel
-   * @extends {Section}
+   * Input that allows free-form text as its value.
+   * choices.
+   * @class TextBox
+   * @extends {Input}
    */
-  var Tabpanel,
+  var TextBox,
   /**
-   * @type {Widget}
+   * @type {Range}
    */
-  Widget = require('Section');
+  Input = require('Input');
 
-  Tabpanel = Widget.extend(function (base) {
+  TextBox = Input.extend(function (base) {
     /**
-     * An map of defaults for instances of Tabpanel
+     * An map of defaults for instances of TextBox
      * @type {Object}
      */
     var defaults = {};
 
     return {
       /**
-       * Constructs Tabpanel
+       * Constructs TextBox
        * @param {jQuery} $element A jQuery collection.
        * @param {Object} settings @optional A settings object.
        * @constructor
@@ -33,5 +33,5 @@ define('Tabpanel', function () {
     };
   });
 
-  return Tabpanel;
+  return TextBox;
 });

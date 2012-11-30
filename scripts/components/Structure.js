@@ -1,26 +1,25 @@
-define('Tabpanel', function () {
+define('Structure', function () {
   /**
-   * Provides a mechanism for selecting
-   * the tab content that is to be rendered to the user.
-   * @class Tabpanel
-   * @extends {Section}
+   * A dynamic section of content
+   * @class Structure
+   * @extends {Base}
    */
-  var Tabpanel,
+  var Base,
   /**
-   * @type {Widget}
+   * @type {Base}
    */
-  Widget = require('Section');
+  Base = require('Base'),
 
-  Tabpanel = Widget.extend(function (base) {
+  Structure = Base.extend(function (base) {
     /**
-     * An map of defaults for instances of Tabpanel
+     * An map of defaults for instances of Structure
      * @type {Object}
      */
     var defaults = {};
 
     return {
       /**
-       * Constructs Tabpanel
+       * Constructs Structure
        * @param {jQuery} $element A jQuery collection.
        * @param {Object} settings @optional A settings object.
        * @constructor
@@ -33,5 +32,5 @@ define('Tabpanel', function () {
     };
   });
 
-  return Tabpanel;
+  return Structure;
 });

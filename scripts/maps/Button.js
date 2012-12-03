@@ -1,4 +1,4 @@
-define(['Map', 'supports'], function (Map, SUPPORTS) {
+define(['Map', 'SUPPORTS'], function (Map, SUPPORTS) {
   var executionEvent = (SUPPORTS.touchEvents) ? 'touchstart' : 'click',
     Button;
 
@@ -6,6 +6,9 @@ define(['Map', 'supports'], function (Map, SUPPORTS) {
 
   Button.direct('[data-lu~=\"Button:Select\"]', function () {
     this.settings.action = 'select';
+    this.ready(function () {
+      console.log('Button Select directive resolved');
+    });
   });
 
   return Button;

@@ -1,4 +1,4 @@
-define('decorators/hiddenState', function () {
+define(function () {
   /**
    * A decorator that provides a mechanism for working with a hidden state
    * @return {Object} an Object to be attached to the decorated instance's

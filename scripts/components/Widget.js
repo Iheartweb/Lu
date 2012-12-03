@@ -1,17 +1,11 @@
-define('Widget', function () {
+define(['./Base'], function (Base) {
   /**
    * Widgets are discrete user interface objects
    * with which the user can interact.
    * @class Widget
    * @extends {Base}
    */
-  var Widget,
-  /**
-   * @type {Base}
-   */
-  Roletype = require('Base');
-
-  Widget = Roletype.extend(function (base) {
+  var Widget = Base.extend(function (base) {
     /**
      * An map of defaults for instances of Widget
      * @type {Object}

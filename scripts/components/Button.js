@@ -1,25 +1,18 @@
-define('Button', function () {
+define(['./Command', 'SUPPORTS'], function (Command, SUPPORTS) {
   /**
    * An interactive component that transforms a native event into a custom
    * event useful to other components.
    * @class Button
    * @extends {Command}
    */
-  var Button,
-  /**
-   * @type {Command}
-   */
-  Command = require('Command');
-
-  Button = Command.extend(function (base) {
+  var Button = Command.extend(function (base) {
     /**
      * An map of defaults for instances of Button
      * @type {Object}
      */
     var defaults = {
       /**
-       * A native event to capture. Defaults to touchstart if supported,
-       * otherwise click.
+       * A native event to capture. Defaults to touchstart if supported,otherwise click.
        * @default touchstart || click
        * @type {String}
        */
@@ -43,6 +36,7 @@ define('Button', function () {
        * @constructor
        */
       init: function ($element, settings) {
+        var self = this;
         settings = settings || {};
         _.defaults(settings, defaults);
         base.init.call(this, $element, settings);

@@ -1,24 +1,12 @@
-define('Tablist', function () {
+define(['./Composite', './decorators/expandedState', 'Fiber'],
+  function (Composite, expandedStateDecorator, Fiber) {
   /**
    * Provides a mechanism for selecting
    * the tab content that is to be rendered to the user.
    * @class Tablist
    * @extends {Widget}
    */
-  var Tablist,
-
-  /**
-   * @type {Composite}
-   */
-  Composite = require('Composite'),
-
-  /**
-   * An imported decorator to support the expanded state
-   * @type {Function}
-   */
-  expandedStateDecorator = require('decorators/expandedState');
-
-  Tablist = Composite.extend(function (base) {
+  var Tablist = Composite.extend(function (base) {
     /**
      * An map of defaults for instances of Tablist
      * @type {Object}
@@ -49,7 +37,7 @@ define('Tablist', function () {
           self.expand();
         });
 
-        //setup the selected state on instantiation
+        //setup the expanded state on instantiation
         if (this.isExpanded()) {
           self.expand();
         }

@@ -1,4 +1,4 @@
-define(['CONSTANTS'], function (CONSTANTS) {
+define(['constants', 'utilities'], function (CONSTANTS, UTILITIES) {
   /**
    * Returns a components object containing all components mapped to a node.
    * This should be called with a jQuery collection as its context.
@@ -7,7 +7,7 @@ define(['CONSTANTS'], function (CONSTANTS) {
    */
   function getComponents() {
     var components = CONSTANTS.components.dataKey,
-      $this = $(this);
+      $this = UTILITIES.$(this);
 
     if ($this.length > 0) {
       return $this.data(components) || $this.data(components, {}).data(components);

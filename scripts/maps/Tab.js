@@ -1,11 +1,9 @@
-define('Tab', function () {
-  var Map = require('lu/Map'),
-    Tab;
+define(['Map'], function (Map) {
+  var Tab = new Map({id: 'Tab', autoExecute: true});
 
-  Tab = new Map({id: 'Tab', executeOnEvent: 'lu:select'});
-  Tab.direct('[role~=tab]', function(){
-    this.ready(function () {
-      console.info('Tab Directive Resolved')
+  Tab.direct('[role~=tab]', function () {
+    this.ready( function () {
+      console.log('Tab directive resolved');
     });
   });
 

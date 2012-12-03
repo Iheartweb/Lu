@@ -1,4 +1,5 @@
-define(['Lu', 'Fiber', 'constants', 'utilities'], function (Lu, Fiber, CONSTANTS, UTILITIES) {
+define(['Lu', 'Fiber', 'constants', 'utilities', 'helpers'],
+  function (Lu, Fiber, CONSTANTS, UTILITIES, HELPERS) {
   return Fiber.extend(function () {
     var defaults = {
       autoExecute: false,
@@ -75,6 +76,8 @@ define(['Lu', 'Fiber', 'constants', 'utilities'], function (Lu, Fiber, CONSTANTS
             }
           });
         });
+
+        return this;
       },
       execute: function (element) {
         var deferral = $.Deferred(),
@@ -115,26 +118,29 @@ define(['Lu', 'Fiber', 'constants', 'utilities'], function (Lu, Fiber, CONSTANTS
         //We've gathered all component information so let's load the necessary
         //scripts
         require(requires, function () {
-          _.each(queue, function (item) {
-            var component = item.component,
-              Export;
+          _.each(queue, function (item, index) {
+            var component = item.component;
 
-            //only process components that have a status of queued
-            if (component.status === 'queued') {
-              Export = require([item.id]);
-              component.instance = new Export($element, component.settings);
-              component.deferral.resolveWith(component.instance);
-              component.status = 'ready';
-            }
+            require([item.id], function (Module) {
+              //only process components that have a status of queued
+              if (component.status === 'queued') {
+                component.instance = new Module(item.$element, component.settings);
+                component.status = 'ready';
+                component.deferral.resolveWith(component.instance);
+              }
+
+              if (index === queue.length - 1) {
+                deferral.resolveWith(Lu);
+              }
+            });
           });
-
-          deferral.resolveWith(Lu);
         });
 
         return deferral;
       },
       direct: function (pattern, accessor) {
-        var self = this;
+        var self = this,
+          $pattern = UTILITIES.$(pattern);
 
         this.directives.push({
           pattern: pattern,
@@ -142,23 +148,27 @@ define(['Lu', 'Fiber', 'constants', 'utilities'], function (Lu, Fiber, CONSTANTS
         });
 
         if (this.autoExecute) {
-          return;
+          self.process($pattern).execute($pattern);
+          return this;
         }
 
         if (this.executeOnEvent) {
-          $(pattern).one(this.executeOnEvent, function (event, instance) {
+          $pattern.one(this.executeOnEvent, function (event, instance) {
             var $this = $(this),
               $target = $(event.target),
               component;
 
             self.process($this);
-            component = $this.lu('getComponent', self.id);
+            component = HELPERS.getComponent.call($this, self.id);
             if (component && component.status === 'mapped') {
               event.stopPropagation();
               event.preventDefault();
               self.execute($this).then(function () {
-                console.warn('Mapper Execution Resolved');
-                $target.trigger(event.type, [instance]);
+                if (instance) {
+                  $target.trigger(event.type, [instance]);
+                } else {
+                  $target.trigger(event.type);
+                }
               });
             }
           });

@@ -20,7 +20,7 @@ define(function () {
      */
     $: function (element) {
       if( element instanceof $ ) {
-        return $;
+        return element;
       } else {
         return $(element);
       }

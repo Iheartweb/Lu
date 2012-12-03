@@ -1,16 +1,10 @@
-define('Composite', function () {
+define(['./Widget'], function (Widget) {
   /**
    * A widget that may contain navigable descendants or owned children.
    * @class Composite
    * @extends {Widget}
    */
-  var Composite,
-  /**
-   * @type {Widget}
-   */
-  Widget = require('Widget');
-
-  Composite = Widget.extend(function (base) {
+  var Composite = Widget.extend(function (base) {
     /**
      * An map of defaults for instances of Composite
      * @type {Object}
@@ -26,8 +20,8 @@ define('Composite', function () {
        */
       init: function ($element, settings) {
         var self = this,
-        //Stores the last item selected
-        current;
+        //Stores the selected item(s)
+        selected = [];
 
         settings = settings || {};
         _.defaults(settings, defaults);
@@ -74,17 +68,25 @@ define('Composite', function () {
         });
 
         //calls the select method
-        this.on('select', function (event, component) {
+        this.on('select', function (event, instance) {
           event.stopPropagation();
-          self.select(component.$element);
+          self.select(instance.$element);
         });
 
-        //captures the selected
-        this.on('selected', function (event, component) {
+        //calls the deselect method
+        this.on('deselect', function (event, instance) {
           event.stopPropagation();
-          if (!current.$element.is(component.$element)) {
-            current.deselect();
-            current = component;
+          self.deselect(instance.$element);
+        });
+
+        //captures the selected event
+        this.on('selected', function (event, instance) {
+          event.stopPropagation();
+          if (instance.isSelected()) {
+            _.each(selected, function (item) {
+              item.deselect();
+            });
+            selected = [instance];
           }
         });
       },
@@ -133,13 +135,30 @@ define('Composite', function () {
           current = this.current();
 
         if ($item) {
-          if (current) {
-            current.deselect();
-          }
           $item.trigger(new $.Event('select', {
             target: $item
           }, [this]));
         }
+
+        return this;
+      },
+      /**
+       * deselects a specified owned item.
+       * @public
+       * @param {String||jQuery||HTMLElement} item The item to select.
+       * @chainable
+       */
+      deselect: function (item) {
+        var $item = this.items().filter(item),
+          current = this.current();
+
+        if ($item) {
+          $item.trigger(new $.Event('deselect', {
+            target: $item
+          }, [this]));
+        }
+
+        return this;
       }
     };
   });

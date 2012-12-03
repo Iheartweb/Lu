@@ -1,4 +1,4 @@
-define('decorators/invalidState', function () {
+define(function () {
   /**
    * A decorator that provides a mechanism for working with a invalid state
    * @return {Object} an Object to be attached to the decorated instance's

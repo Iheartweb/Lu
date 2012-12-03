@@ -5,13 +5,27 @@
 <head>
   <meta charset="utf-8">
   <title>Tabs</title>
+  <style type="text/css">
+    *[role=tab]{
+      display: inline-block;
+      width: auto;
+      border: 1px solid #ddd;
+    }
+    *[role=tablist]{
+      clear: both;
+      display: block;
+    }
+    .lu-state-selected {
+      background: #cde;
+    }
+  </style>
 </head>
 
 <body>
 
   <div>
     <ul role="tablist">
-      <li role="tab" class="lu-state-selected" aria-selected="true" aria-controls="sherlock">
+      <li role="tab" aria-controls="sherlock">
         <a href="#sherlock" data-lu="Button:Select">Sherlock</a>
       </li>
       <li role="tab" aria-controls="watson">

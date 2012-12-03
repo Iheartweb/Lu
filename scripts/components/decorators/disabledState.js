@@ -1,4 +1,4 @@
-define('decorators/disabledState', function () {
+define(function () {
   /**
    * A decorator that provides a mechanism for working with a disabled state
    * @return {Object} an Object to be attached to the decorated instance's

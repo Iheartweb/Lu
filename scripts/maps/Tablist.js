@@ -1,11 +1,9 @@
-define('Tablist', function () {
-  var Map = require('lu/Map'),
-    Tablist;
+define(['Map'], function (Map) {
+  var Tablist = new Map({id: 'Tablist', executeOnEvent: 'lu:selected'});
 
-  Tablist = new Map({id: 'Tablist', executeOnEvent: 'lu:selected'});
-  Tablist.direct('[role~=tablist]', function(){
-    this.ready(function () {
-      console.info('Tablist Directive Resolved')
+  Tablist.direct('[role~=tablist]', function () {
+    this.ready( function () {
+      console.log('Tablist directive resolved');
     });
   });
 

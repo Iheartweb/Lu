@@ -1,27 +1,12 @@
-define('Tab', function () {
+define(['./Widget', './decorators/selectedState', './decorators/expandedState', 'Fiber'],
+  function (Widget, selectedStateDecorator, expandedStateDecorator, Fiber) {
   /**
    * Provides a mechanism for selecting the tab content that is to be rendered
    * to the user.
    * @class Tab
    * @extends {Widget}
    */
-  var Tab,
-  /**
-   * @type {Widget}
-   */
-  Widget = require('Widget'),
-  /**
-   * An imported decorator to support the selected state
-   * @type {function}
-   */
-  selectedStateDecorator = require('decorators/selectedState'),
-  /**
-   * An imported decorator to support the expanded state
-   * @type {function}
-   */
-  expandedStateDecorator = require('decorators/expandedState');
-
-  Tab = Widget.extend(function (base) {
+  var Tab = Widget.extend(function (base) {
     /**
      * An map of defaults for instances of Tab
      * @type {Object}
@@ -36,6 +21,8 @@ define('Tab', function () {
        * @constructor
        */
       init: function ($element, settings) {
+        var self = this;
+
         settings = settings || {};
         _.defaults(settings, defaults);
         base.init.call(this, $element, settings);

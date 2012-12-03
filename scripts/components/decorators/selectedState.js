@@ -1,4 +1,4 @@
-define('decorators/selectedState', function () {
+define(function () {
   /**
    * A decorator that provides a mechanism for working with a selected state
    * @return {Function} an Object to be attached

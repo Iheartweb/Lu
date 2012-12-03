@@ -1,17 +1,11 @@
-define('Command', function () {
+define(['./Widget'], function (Widget) {
   /**
    * An interactive component that transforms a native event into a custom
    * event useful to other components.
    * @class Command
    * @extends {Widget}
    */
-  var Command,
-  /**
-   * @type {Widget}
-   */
-  Widget = require('Widget');
-
-  Command = Widget.extend(function (base) {
+  var Command = Widget.extend(function (base) {
     /**
      * An map of defaults for instances of Command
      * @type {Object}

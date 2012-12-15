@@ -8,7 +8,7 @@ define(['./Widget', './decorators/selectedState', './decorators/expandedState', 
    */
   var Tab = Widget.extend(function (base) {
     /**
-     * An map of defaults for instances of Tab
+     * A map of defaults for instances of Tab
      * @type {Object}
      */
     var defaults = {};
@@ -30,18 +30,6 @@ define(['./Widget', './decorators/selectedState', './decorators/expandedState', 
         Fiber.decorate(this, selectedStateDecorator);
         Fiber.decorate(this, expandedStateDecorator);
 
-        //calls the select method
-        this.on('select', function (event) {
-          event.stopPropagation();
-          self.select();
-        });
-
-        //calls the expand method
-        this.on('expand', function (event) {
-          event.stopPropagation();
-          self.expand();
-        });
-
         //setup the selected state on instantiation
         if (this.isSelected()) {
           self.select();
@@ -51,6 +39,7 @@ define(['./Widget', './decorators/selectedState', './decorators/expandedState', 
         if (this.isExpanded()) {
           self.expand();
         }
+
       }
     };
   });

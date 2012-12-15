@@ -1,11 +1,11 @@
-define(['constants', 'helpers', 'utilities', 'Fiber'],
-  function (CONSTANTS, HELPERS, UTILITIES, Fiber) {
+define(['constants', 'helpers', 'utilities', 'Fiber', 'Lu'],
+  function (CONSTANTS, HELPERS, UTILITIES, Fiber, Lu) {
   /**
    * The base component from which all others inherit.
    * @class Base
    * @extends {Base}
    */
-  var Base = Fiber.extend(function (base) {
+  var Base = Fiber.extend(function () {
     /**
      * An map to contain defaults for instances of Base
      * @type {Object}
@@ -16,7 +16,7 @@ define(['constants', 'helpers', 'utilities', 'Fiber'],
        * @default ''
        * @type {String}
        */
-      observe: '',
+      related: '',
       /**
        * A selector that matches nodes to notify of events
        * @default ''
@@ -24,15 +24,44 @@ define(['constants', 'helpers', 'utilities', 'Fiber'],
        */
       notify: '',
       /**
-       * A flag that used to determine if aria properties should be used to
-       * setup observation and notification. If set to true aria-owns,
-       * aria-describedby, aria-labelledby are used to add elements to observe
-       * and aria-controls is used to add elements to notify.
+       * A flag that used to determine if aria attributes should be used to
+       * to determine relation of components. If set to true aria-owns,
+       * aria-describedby, aria-labelledby, and aria-controls are used to
+       * relate elements. aria-controls is used to determine elements to
+       * notify of events.
        * @default true
        * @type {Boolean}
        */
       aria: true
     };
+
+    /**
+     * Stores and retrieves data associated with the component.
+     * @param {Sting} key The key of the data to store or retrieve. @optional
+     * @param {*} value The value to set. @optional
+     * @return {*} the value associated with the key or the data object if the
+     * key is not specified
+     */
+    function data(key, value) {
+      var d = this.$element.data('lu') || {};
+      if (!d) {
+        d = {};
+      }
+      if (value && key) {
+        d[key] = value;
+        this.$element.data('lu', d);
+      }
+      if(key) {
+        return d[key];
+      }
+      return d;
+    }
+
+    function getStateful(element) {
+      var $element = UTILITIES.$(element);
+      $element = $element.find('[class*=' + CONSTANTS.states.prefix + ']');
+      return $element.filter(Lu.cache());
+    }
 
     /**
      * Inspects the DOM for a declared state
@@ -45,6 +74,7 @@ define(['constants', 'helpers', 'utilities', 'Fiber'],
       var self = this,
         states = this.states,
         state = states[key],
+        index,
         lu,
         aria,
         booleanAttribute,
@@ -118,7 +148,10 @@ define(['constants', 'helpers', 'utilities', 'Fiber'],
       if (typeof event === 'string') {
         events = UTILITIES.trim(arguments[0]).split(/\s+/g);
         _.each(events, function (event, index) {
-          events[index] = CONSTANTS.events.prefix + event;
+          //make sure we don't double prefix
+          if (event.indexOf(CONSTANTS.events.prefix) !== 0) {
+            events[index] = CONSTANTS.events.prefix + event;
+          }
         });
         events = events.join(' ');
       } else {
@@ -141,52 +174,45 @@ define(['constants', 'helpers', 'utilities', 'Fiber'],
        */
       init: function ($element, settings) {
         var self = this,
-          ariaObserve = ['aria-owns', 'aria-describedby', 'aria-labelledby'],
-          observe = [],
-          $observe = $([]),
-          ariaNotify = ['aria-controls'],
+          relatedAttrs = ['aria-owns', 'aria-describedby', 'aria-labelledby', 'aria-controls'],
+          related = [],
+          $related = $(related),
+          notifyAttrs = ['aria-controls'],
           notify = [],
           $notify,
-          data;
+          lu;
 
         settings = settings || {};
         _.defaults(settings, defaults);
 
         this.$element = $element;
 
-        //setup the lu namespace in the elements data
-        this.$element.data('lu');
-        data = this.$element.data('lu');
-
-        if (!data) {
-          this.$element.data('lu', {});
-          data = this.$element.data('lu');
-        }
+        lu = data.call(this);
 
         //Add observers to the data object
-        $notify = data.$observers = data.$observers || $([]);
+        $notify = lu.observers || $([]);
 
         $notify = $notify.add(settings.notify);
 
-        $observe = $observe.add(settings.observe);
+        $related = $related.add(settings.related);
 
         if (settings.aria) {
           //iterate through aria props and identify elements that should be
           //observed
-          _.each(ariaObserve, function (property) {
+          _.each(relatedAttrs, function (property) {
             var attribute = self.$element.attr(property);
             if (attribute) {
               _.each(attribute.split(' '), function (id) {
-                observe.push('#' + id);
+                related.push('#' + id);
               });
             }
           });
 
-          $observe = $observe.add(observe.join(','));
+          $related = $related.add(related.join(','));
 
           //iterate through aria props and identify elements that should be
           //notified
-          _.each(ariaNotify, function (property) {
+          _.each(notifyAttrs, function (property) {
             var attribute = self.$element.attr(property);
             if (attribute) {
               _.each(attribute.split(' '), function (id) {
@@ -195,9 +221,11 @@ define(['constants', 'helpers', 'utilities', 'Fiber'],
             }
           });
 
-          $notify.add(notify.join(',')).lu('observe', this.$element);
+          $notify = $notify.add(notify.join(','));
         }
 
+        data.call(this, 'observers', $notify);
+        data.call(this, 'related', $related);
       },
       /**
        * A Map to contain states that can be applied to Base
@@ -216,85 +244,72 @@ define(['constants', 'helpers', 'utilities', 'Fiber'],
         var $element = this.$element,
           state = this.states[key],
           current = this.getState(key),
+          store = data.call(this, 'states') || data.call(this, 'states', {}),
+          lu = state.lu,
+          aria = state.aria,
+          booleanAttribute = state.booleanAttribute,
+          currentIndex,
+          values,
+          filter,
+          index,
           style;
 
         if (current !== value) {
-          if (current !== undefined) {
-            style = state.lu[_.indexOf(this.states.values, current)];
+          currentIndex = _.indexOf(state.values, current);
+          index = _.indexOf(state.values, value);
+
+          if (current) {
+            style = lu[currentIndex];
             $element.removeClass(CONSTANTS.states.prefix + style);
           }
-          style = state.lu[_.indexOf(state.values, value)];
-          $element.addClass(CONSTANTS.states.prefix + style);
+          if (value) {
+            style = lu[index];
+            $element.addClass(CONSTANTS.states.prefix + style);
+          }
+
+          //apply the aria state attribute
+          if (aria) {
+            if (_.isArray(aria)) {
+              values = aria;
+              filter = undefined;
+            } else {
+              values = aria.values;
+              filter = aria.filter;
+            }
+
+            if ((filter && $element.is(filter)) || !filter) {
+              if (values[index]) {
+                $element.attr('aria-' + key, values[index]);
+              } else {
+                $element.removeAttr('aria-' + key);
+              }
+            }
+          }
+
+          //apply the boolean attribute state
+          if (booleanAttribute) {
+            if (_.isArray(booleanAttribute)) {
+              values = booleanAttribute;
+              filter = undefined;
+            } else {
+              values = booleanAttribute.values;
+              filter = booleanAttribute.filter;
+            }
+
+            if ((filter && $element.is(filter)) || !filter) {
+              if (values[index]) {
+                $element.prop(key, values[index]);
+              } else {
+                $element.removeProp(key);
+              }
+            }
+          }
         }
 
-        //this.trigger(key, [this]);
-        // if (value !== currentValue) {
-        //   index = _.indexOf(values, value);
-        //   currentIndex = _.indexOf(values, currentValue);
-
-        //   //apply the lu state class
-        //   if (lu) {
-        //     if(value) {
-        //       if (state.lu[index]) {
-        //         $element.addClass(CONSTANTS.states.prefix + state.lu[index]);
-        //       }
-        //     }
-        //     if (state.lu[index]) {
-        //       $element.addClass(CONSTANTS.states.prefix + state.lu[index]);
-        //     } else {
-        //       $element.removeClass(CONSTANTS.states.prefix + state.lu[currentIndex]);
-        //     }
-        //   }
-
-        //   //apply the aria state attribute
-        //   if (aria) {
-        //     (function () {
-        //       var values,
-        //         filter;
-
-        //       if (_.isArray(aria)) {
-        //         values = aria;
-        //       } else {
-        //         values = aria.values;
-        //       }
-
-        //       filter = aria.filter;
-
-        //       if ((filter && $element.is(filter)) || !filter) {
-        //         if (values[index]) {
-        //           $element.attr('aria-' + key, values[index]);
-        //         } else {
-        //           $element.removeAttr('aria-' + key);
-        //         }
-        //       }
-        //     }());
-        //   }
-
-        //   //apply the boolean attribute state
-        //   if (booleanAttribute) {
-        //     (function () {
-        //       var values,
-        //         filter;
-
-        //       if (_.isArray(booleanAttribute)) {
-        //         values = booleanAttribute;
-        //       } else {
-        //         values = booleanAttribute.values;
-        //       }
-
-        //       filter = booleanAttribute.filter;
-
-        //       if ((filter && $element.is(filter)) || !filter) {
-        //         if (values[index]) {
-        //           $element.prop(key, values[index]);
-        //         } else {
-        //           $element.removeProp(key);
-        //         }
-        //       }
-        //     }());
-        //   }
-
-        // }
+        if (!store[key] || current !== value) {
+          data.call(this, 'states')[key] = value;
+          this.trigger(key, [this]);
+        }
 
         return this;
       },
@@ -358,10 +373,32 @@ define(['constants', 'helpers', 'utilities', 'Fiber'],
        * @chainable
        */
       trigger: function () {
-        var parameters = Array.prototype.slice.call(arguments);
+        var self = this,
+          parameters = Array.prototype.slice.call(arguments),
+          deferrals = [],
+          $related;
+
+        $related = HELPERS.getParents(this.$element, Lu.cache());
+        $related = $related.add(getStateful($related));
+
         parameters[0] = prefix(parameters[0]);
+
+        _.each($related, function () {
+          var components = HELPERS.getComponents($related);
+          _.each(components, function (component) {
+            if (component.execute) {
+              component.execute();
+            }
+            deferrals.push(component.deferral);
+          });
+        });
+
+        $.when.apply($, deferrals).then(function() {
+          self.$element.trigger.apply(self.$element, parameters);
+        });
+
         this.notify.apply(this, parameters);
-        this.$element.trigger.apply(this.$element, parameters);
+
         return this;
       },
       /**
@@ -372,7 +409,7 @@ define(['constants', 'helpers', 'utilities', 'Fiber'],
        * @chainable
        */
       observe: function (observer) {
-        var $observers = this.$element.data('lu').$observers;
+        var $observers = data.call(this, 'observers');
         $observers = $observers.add(HELPERS.$(observer));
         return this;
       },
@@ -396,16 +433,31 @@ define(['constants', 'helpers', 'utilities', 'Fiber'],
        * @chainable
        */
       notify: function () {
-        var parameters = Array.prototype.slice.call(arguments);
+        var parameters = Array.prototype.slice.call(arguments),
+          observers = data.call(this, 'observers');
 
-        parameters[0] = new $.Event(prefix(parameters[0]), {
+        parameters[0] = new $.Event(parameters[0], {
           target: this.$element
         });
 
-        _.each(this.$element.data('lu').$observers, function (observer) {
-          var $observer = $(observer);
-          $observer.trigger.apply($observer, parameters);
-        });
+        if (observers) {
+          _.each(observers, function (observer) {
+            var $observer = $(observer),
+              components = HELPERS.getComponents($observer),
+              deferrals = [];
+
+            _.each(components, function (component) {
+              deferrals.push(component.deferral);
+              if (component.execute) {
+                component.execute();
+              }
+            });
+
+            $.when.apply($, deferrals).then(function () {
+              $observer.trigger.apply($observer, parameters);
+            });
+          });
+        }
 
         return this;
       }

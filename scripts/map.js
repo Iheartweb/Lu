@@ -3,11 +3,15 @@ define(['Lu', 'Fiber', 'constants', 'utilities', 'helpers'],
   return Fiber.extend(function () {
     var defaults = {
       autoExecute: false,
-      executeOnEvent: null
+      executeOnEvent: undefined
     };
 
     function register(map) {
-      Lu.register(map);
+      return Lu.register(map);
+    }
+
+    function cache(element) {
+      return Lu.cache(element);
     }
 
     return {
@@ -22,7 +26,8 @@ define(['Lu', 'Fiber', 'constants', 'utilities', 'helpers'],
         register(this);
       },
       process: function (element) {
-        var directives = this.directives,
+        var self = this,
+          directives = this.directives,
           id = this.id,
           $element = UTILITIES.$(element);
 
@@ -49,6 +54,8 @@ define(['Lu', 'Fiber', 'constants', 'utilities', 'helpers'],
 
               if (!data[id]) {
                 component = {
+                  id: id,
+                  executionEvent: self.executeOnEvent,
                   deferral: deferral,
                   ready: deferral.then,
                   settings: {}
@@ -71,6 +78,12 @@ define(['Lu', 'Fiber', 'constants', 'utilities', 'helpers'],
                   //call the maps' accessor
                   accessor.call(component, $element);
                 });
+
+                component.execute = function () {
+                  return self.execute($element);
+                  delete component.execute;
+                };
+
                 component.status = 'mapped';
               }
             }
@@ -140,15 +153,20 @@ define(['Lu', 'Fiber', 'constants', 'utilities', 'helpers'],
       },
       direct: function (pattern, accessor) {
         var self = this,
-          $pattern = UTILITIES.$(pattern);
+          $pattern = UTILITIES.$(pattern),
+          processer;
+
+        cache($pattern);
 
         this.directives.push({
           pattern: pattern,
           accessor: accessor
         });
 
+        processer = self.process($pattern);
+
         if (this.autoExecute) {
-          self.process($pattern).execute($pattern);
+          processer.execute($pattern);
           return this;
         }
 
@@ -156,14 +174,24 @@ define(['Lu', 'Fiber', 'constants', 'utilities', 'helpers'],
           $pattern.one(this.executeOnEvent, function (event, instance) {
             var $this = $(this),
               $target = $(event.target),
-              component;
+              deferrals,
+              promise,
+              components,
+              state;
 
             self.process($this);
-            component = HELPERS.getComponent.call($this, self.id);
-            if (component && component.status === 'mapped') {
+            components = HELPERS.getComponent($this, self.id);
+
+            deferrals = _.pluck(components, 'deferral');
+
+            promise = $.when.apply($, deferrals, components);
+            state = promise.state();
+
+            if (state === 'pending') {
               event.stopPropagation();
               event.preventDefault();
-              self.execute($this).then(function () {
+
+              promise.then(function () {
                 if (instance) {
                   $target.trigger(event.type, [instance]);
                 } else {
@@ -171,6 +199,12 @@ define(['Lu', 'Fiber', 'constants', 'utilities', 'helpers'],
                 }
               });
             }
+
+            _.each(components, function (component) {
+              if (component.execute) {
+                component.execute();
+              }
+            });
           });
         }
 

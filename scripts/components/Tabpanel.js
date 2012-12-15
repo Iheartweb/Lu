@@ -1,17 +1,12 @@
-define('Tabpanel', function () {
+define(['./Widget', './decorators/hiddenState', 'Fiber', 'helpers'],
+  function (Widget, hiddenStateDecorator, Fiber, HELPERS) {
   /**
    * Provides a mechanism for selecting
    * the tab content that is to be rendered to the user.
    * @class Tabpanel
    * @extends {Section}
    */
-  var Tabpanel,
-  /**
-   * @type {Widget}
-   */
-  Widget = require('Section');
-
-  Tabpanel = Widget.extend(function (base) {
+  var Tabpanel = Widget.extend(function (base) {
     /**
      * An map of defaults for instances of Tabpanel
      * @type {Object}
@@ -26,9 +21,22 @@ define('Tabpanel', function () {
        * @constructor
        */
       init: function ($element, settings) {
+        var self = this;
+
         settings = settings || {};
         _.defaults(settings, defaults);
         base.init.call(this, $element, settings);
+
+        Fiber.decorate(this, hiddenStateDecorator);
+
+        this.on('selected', function (event, instance) {
+          event.stopPropagation();
+          if (instance.isSelected()) {
+            self.show();
+          } else {
+            self.hide();
+          }
+        });
       }
     };
   });

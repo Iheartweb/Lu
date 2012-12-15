@@ -6,36 +6,54 @@
   <meta charset="utf-8">
   <title>Tabs</title>
   <style type="text/css">
+    .tabs {
+      padding: 20px;
+    }
     *[role=tab]{
       display: inline-block;
       width: auto;
+      padding: 3px 6px;
+      margin-right: 2px;
       border: 1px solid #ddd;
+      border-bottom: 0;
     }
     *[role=tablist]{
       clear: both;
       display: block;
+      margin: 0;
+      padding: 0
+    }
+    *[role=tabpanel]{
+      width: 400px;
+      padding: 0 12px;
+      border: 1px solid #666;
     }
     .lu-state-selected {
-      background: #cde;
+      border: 1px solid #666;
+      border-bottom: 0;
+      background: #efefef;
+    }
+    .lu-state-hidden {
+      display: none;
     }
   </style>
 </head>
 
 <body>
 
-  <div>
+  <div class="tabs">
     <ul role="tablist">
-      <li role="tab" aria-controls="sherlock">
-        <a href="#sherlock" data-lu="Button:Select">Sherlock</a>
+      <li id="sherlock-tab-0" tabindex="1" role="tab" aria-controls="sherlock-0" class="lu-state-selected">
+        <a href="#sherlock-0" tabindex="-1" role="button" data-lu="Button:Select">Sherlock</a>
       </li>
-      <li role="tab" aria-controls="watson">
-        <a href="#watson" data-lu="Button:Select">Watson</a>
+      <li id="watson-tab-0" role="tab" aria-controls="watson-0">
+        <a href="#watson-0" tabindex="-1" role="button" data-lu="Button:Select">Watson</a>
       </li>
-      <li role="tab" aria-controls="moriarty">
-        <a href="#moriarty" data-lu="Button:Select">Moriarty</a>
+      <li id="moriarty-tab" role="tab" aria-controls="moriarty-0">
+        <a href="#moriarty-0" tabindex="-1" role="button" data-lu="Button:Select">Moriarty</a>
       </li>
     </ul>
-    <div id="sherlock" role="tabpanel">
+    <div id="sherlock-0" role="tabpanel" tabindex="1" aria-labelledby="sherlock-tab-0">
       <h2>Sherlock</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -44,7 +62,7 @@
       cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
       proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </div>
-    <div id="watson" role="tabpanel">
+    <div id="watson-0" role="tabpanel" tabindex="1" aria-labelledby="watson-tab-0" class="lu-state-hidden">
       <h2>Watson</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -53,7 +71,212 @@
       cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
       proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </div>
-    <div id="moriarty" role="tabpanel">
+    <div id="moriarty-0" role="tabpanel" tabindex="1" aria-labelledby="moriarty-tab-0" class="lu-state-hidden">
+      <h2>Moriarty</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <ul role="tablist">
+      <li id="sherlock-tab-1" tabindex="1" role="tab" aria-controls="sherlock-1" class="lu-state-selected">
+        <a href="#sherlock-1" tabindex="-1" role="button" data-lu="Button:Select">Sherlock</a>
+      </li>
+      <li id="watson-tab-1" role="tab" aria-controls="watson-1">
+        <a href="#watson-1" tabindex="-1" role="button" data-lu="Button:Select">Watson</a>
+      </li>
+      <li id="moriarty-tab" role="tab" aria-controls="moriarty-1">
+        <a href="#moriarty-1" tabindex="-1" role="button" data-lu="Button:Select">Moriarty</a>
+      </li>
+    </ul>
+    <div id="sherlock-1" role="tabpanel" tabindex="1" aria-labelledby="sherlock-tab-1">
+      <h2>Sherlock</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <div id="watson-1" role="tabpanel" tabindex="1" aria-labelledby="watson-tab-1" class="lu-state-hidden">
+      <h2>Watson</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <div id="moriarty-1" role="tabpanel" tabindex="1" aria-labelledby="moriarty-tab-1" class="lu-state-hidden">
+      <h2>Moriarty</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <ul role="tablist">
+      <li id="sherlock-tab-2" tabindex="1" role="tab" aria-controls="sherlock-2" class="lu-state-selected">
+        <a href="#sherlock-2" tabindex="-2" role="button" data-lu="Button:Select">Sherlock</a>
+      </li>
+      <li id="watson-tab-2" role="tab" aria-controls="watson-2">
+        <a href="#watson-2" tabindex="-2" role="button" data-lu="Button:Select">Watson</a>
+      </li>
+      <li id="moriarty-tab" role="tab" aria-controls="moriarty-2">
+        <a href="#moriarty-2" tabindex="-2" role="button" data-lu="Button:Select">Moriarty</a>
+      </li>
+    </ul>
+    <div id="sherlock-2" role="tabpanel" tabindex="1" aria-labelledby="sherlock-tab-2">
+      <h2>Sherlock</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <div id="watson-2" role="tabpanel" tabindex="1" aria-labelledby="watson-tab-2" class="lu-state-hidden">
+      <h2>Watson</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <div id="moriarty-2" role="tabpanel" tabindex="1" aria-labelledby="moriarty-tab-2" class="lu-state-hidden">
+      <h2>Moriarty</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <ul role="tablist">
+      <li id="sherlock-tab-3" tabindex="1" role="tab" aria-controls="sherlock-3" class="lu-state-selected">
+        <a href="#sherlock-3" tabindex="-3" role="button" data-lu="Button:Select">Sherlock</a>
+      </li>
+      <li id="watson-tab-3" role="tab" aria-controls="watson-3">
+        <a href="#watson-3" tabindex="-3" role="button" data-lu="Button:Select">Watson</a>
+      </li>
+      <li id="moriarty-tab" role="tab" aria-controls="moriarty-3">
+        <a href="#moriarty-3" tabindex="-3" role="button" data-lu="Button:Select">Moriarty</a>
+      </li>
+    </ul>
+    <div id="sherlock-3" role="tabpanel" tabindex="1" aria-labelledby="sherlock-tab-3">
+      <h2>Sherlock</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <div id="watson-3" role="tabpanel" tabindex="1" aria-labelledby="watson-tab-3" class="lu-state-hidden">
+      <h2>Watson</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <div id="moriarty-3" role="tabpanel" tabindex="1" aria-labelledby="moriarty-tab-3" class="lu-state-hidden">
+      <h2>Moriarty</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <ul role="tablist">
+      <li id="sherlock-tab-4" tabindex="1" role="tab" aria-controls="sherlock-4" class="lu-state-selected">
+        <a href="#sherlock-4" tabindex="-4" role="button" data-lu="Button:Select">Sherlock</a>
+      </li>
+      <li id="watson-tab-4" role="tab" aria-controls="watson-4">
+        <a href="#watson-4" tabindex="-4" role="button" data-lu="Button:Select">Watson</a>
+      </li>
+      <li id="moriarty-tab" role="tab" aria-controls="moriarty-4">
+        <a href="#moriarty-4" tabindex="-4" role="button" data-lu="Button:Select">Moriarty</a>
+      </li>
+    </ul>
+    <div id="sherlock-4" role="tabpanel" tabindex="1" aria-labelledby="sherlock-tab-4">
+      <h2>Sherlock</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <div id="watson-4" role="tabpanel" tabindex="1" aria-labelledby="watson-tab-4" class="lu-state-hidden">
+      <h2>Watson</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <div id="moriarty-4" role="tabpanel" tabindex="1" aria-labelledby="moriarty-tab-4" class="lu-state-hidden">
+      <h2>Moriarty</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <ul role="tablist">
+      <li id="sherlock-tab-5" tabindex="1" role="tab" aria-controls="sherlock-5" class="lu-state-selected">
+        <a href="#sherlock-5" tabindex="-5" role="button" data-lu="Button:Select">Sherlock</a>
+      </li>
+      <li id="watson-tab-5" role="tab" aria-controls="watson-5">
+        <a href="#watson-5" tabindex="-5" role="button" data-lu="Button:Select">Watson</a>
+      </li>
+      <li id="moriarty-tab" role="tab" aria-controls="moriarty-5">
+        <a href="#moriarty-5" tabindex="-5" role="button" data-lu="Button:Select">Moriarty</a>
+      </li>
+    </ul>
+    <div id="sherlock-5" role="tabpanel" tabindex="1" aria-labelledby="sherlock-tab-5">
+      <h2>Sherlock</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <div id="watson-5" role="tabpanel" tabindex="1" aria-labelledby="watson-tab-5" class="lu-state-hidden">
+      <h2>Watson</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <div id="moriarty-5" role="tabpanel" tabindex="1" aria-labelledby="moriarty-tab-5" class="lu-state-hidden">
       <h2>Moriarty</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,

@@ -23,7 +23,7 @@ define(function () {
       self.hide();
     });
 
-    //calls the grab method
+    //calls the show method
     this.on('show', function (event) {
       event.stopPropagation();
       self.show();
@@ -32,10 +32,10 @@ define(function () {
     return {
       /**
        * Sets the hidden state to true
-       * @method hidden
+       * @method hide
        * @chainable
        */
-      hidden: function () {
+      hide: function () {
         this.setState('hidden', true);
         return this;
       },

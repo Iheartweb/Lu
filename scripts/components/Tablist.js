@@ -31,12 +31,6 @@ define(['./Composite', './decorators/expandedState', 'Fiber'],
 
         Fiber.decorate(this, expandedStateDecorator);
 
-        //calls the expand method
-        this.on('expand', function (event) {
-          event.stopPropagation();
-          self.expand();
-        });
-
         //setup the expanded state on instantiation
         if (this.isExpanded()) {
           self.expand();

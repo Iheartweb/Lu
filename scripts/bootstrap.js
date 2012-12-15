@@ -1,4 +1,4 @@
-//Configure requireJS to find Lu file and dependencies
+//Configure requireJS to find Lu files and dependencies
 require.config({
   baseUrl: '/scripts/',
   paths: {
@@ -6,5 +6,7 @@ require.config({
   }
 });
 
-// Load some default mappers
-require(['maps/Button', 'maps/Tab', 'maps/Tablist'], function () {});
+require(['Processor', 'maps/Button', 'maps/Tab', 'maps/Tablist', 'maps/Tabpanel'],
+  function (Processor) {
+    //new Processor(document);
+});

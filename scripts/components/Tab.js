@@ -1,5 +1,5 @@
-define(['./Widget', './decorators/selectedState', './decorators/expandedState', 'Fiber'],
-  function (Widget, selectedStateDecorator, expandedStateDecorator, Fiber) {
+define(['./Widget', './decorators/selectedState', './decorators/expandedState', 'Fiber', 'supports', 'constants'],
+  function (Widget, selectedStateDecorator, expandedStateDecorator, Fiber, SUPPORTS, CONSTANTS) {
   /**
    * Provides a mechanism for selecting the tab content that is to be rendered
    * to the user.
@@ -21,7 +21,8 @@ define(['./Widget', './decorators/selectedState', './decorators/expandedState', 
        * @constructor
        */
       init: function ($element, settings) {
-        var self = this;
+        var self = this,
+          supportedEvent = (SUPPORTS.touchEvents) ? 'touchstart' : 'click';
 
         settings = settings || {};
         _.defaults(settings, defaults);
@@ -35,11 +36,16 @@ define(['./Widget', './decorators/selectedState', './decorators/expandedState', 
           self.select();
         }
 
-        //setup the selected state on instantiation
+        //setup the expanded state on instantiation
         if (this.isExpanded()) {
           self.expand();
         }
 
+        this.$element.on(supportedEvent, function (event) {
+          if(!self.$element.is(event.target)) {
+            self.$element.attr('tabindex', 1).focus();
+          }
+        });
       }
     };
   });

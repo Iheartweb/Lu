@@ -1,0 +1,33 @@
+.tabs {
+  .tablist {
+    margin: 0;
+    list-style: none;
+    padding: 0;
+    border-bottom: 1px solid #DDD;
+    .tab {
+      display: inline-block;
+      width: auto;
+      padding: 4px 8px;
+      margin-bottom: -1px;
+      border-radius: 2px 2px 0 0;
+      &:active,
+      &:focus {
+        background-color: #f8f8f8;
+      }
+      &.lu-state-selected {
+        border: 1px solid #DDD;
+        border-bottom-color: #f8f8f8;
+      }
+      a {
+        display: block;
+      }
+    }
+  }
+  .tabpanel {
+    display: block;
+    padding: 4px 0px;
+    &.lu-state-hidden {
+      display: none;
+    }
+  }
+}

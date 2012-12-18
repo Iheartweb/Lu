@@ -1,4 +1,4 @@
-define(['./Command', 'SUPPORTS'], function (Command, SUPPORTS) {
+define(['./Command', 'supports'], function (Command, SUPPORTS, UTILITIES) {
   /**
    * An interactive component that transforms a native event into a custom
    * event useful to other components.
@@ -37,6 +37,7 @@ define(['./Command', 'SUPPORTS'], function (Command, SUPPORTS) {
        */
       init: function ($element, settings) {
         var self = this;
+
         settings = settings || {};
         _.defaults(settings, defaults);
         base.init.call(this, $element, settings);

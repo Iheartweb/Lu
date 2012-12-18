@@ -48,7 +48,6 @@ define('Link', function () {
         base.init.call(this, $element, settings);
 
         this.$element.on(settings.on, _.throttle(function (event) {
-          event.preventDefault();
           self.trigger(settings.action, [self]);
         }));
       }

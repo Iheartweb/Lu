@@ -13,5 +13,12 @@ define(['Map', 'SUPPORTS'], function (Map, SUPPORTS) {
     });
   });
 
+  Button.direct('[data-lu~=\"Button:Expand\"]', function () {
+    this.settings.action = 'toggle:expanded';
+    this.ready(function () {
+      console.log('Button Expand directive resolved');
+    });
+  });
+
   return Button;
 });

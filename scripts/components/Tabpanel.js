@@ -37,6 +37,16 @@ define(['./Widget', './decorators/hiddenState', 'Fiber', 'helpers'],
             self.hide();
           }
         });
+
+        this.on('expanded', function (event, instance) {
+          event.stopPropagation();
+          if (instance.isExpanded()) {
+            self.show();
+          } else {
+            self.hide()
+          }
+        });
+
       }
     };
   });

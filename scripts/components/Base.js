@@ -346,7 +346,7 @@ define(['constants', 'helpers', 'utilities', 'Fiber', 'Lu'],
        * @chainable
        */
       one: function () {
-        var parameters = CONSTANTS.slice.call(arguments);
+        var parameters = Array.prototype.slice.call(arguments);
         parameters[0] = prefix(parameters[0]);
         this.$element.one.apply(this.$element, parameters);
         return this;

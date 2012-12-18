@@ -31,7 +31,25 @@ define(function () {
       self.collapse();
     });
 
+    //calls the toggleExpanded method
+    this.on('toggle:expanded', function (event) {
+      event.stopPropagation();
+      self.toggleExpanded();
+    });
+
     return {
+      /**
+       * Toggles the expanded state
+       * @method toggleExpanded
+       * @chainable
+       */
+      toggleExpanded: function () {
+        if (this.isExpanded()) {
+          return this.collapse();
+        } else {
+          return this.expand();
+        }
+      },
       /**
        * Sets the expanded state to true
        * @method expand

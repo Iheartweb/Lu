@@ -4,10 +4,10 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Tabs</title>
+  <title>Accordion</title>
   <link rel="stylesheet" type="text/css" href="/styles/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="/styles/css/typography.css">
-  <link rel="stylesheet" type="text/css" href="/styles/css/tabs.css">
+  <link rel="stylesheet" type="text/css" href="/styles/css/accordion.css">
 </head>
 
 <body>
@@ -16,20 +16,12 @@
     <nav></nav>
     <div class="content">
       <div class="main">
-        <h1>Tabs</h1>
-        <div class="tabs">
-          <ul role="tablist" class="tablist">
-            <li id="sherlock-tab-0" tabindex="1" role="tab" aria-controls="sherlock-0" class="lu-state-selected tab">
-              <a href="#sherlock-0" tabindex="-1" role="button" data-lu="Button:Select">Sherlock</a>
-            </li>
-            <li id="watson-tab-0" role="tab" class="tab" aria-controls="watson-0">
-              <a href="#watson-0" tabindex="-1" role="button" data-lu="Button:Select">Watson</a>
-            </li>
-            <li id="moriarty-tab" role="tab" class="tab" aria-controls="moriarty-0">
-              <a href="#moriarty-0" tabindex="-1" role="button" data-lu="Button:Select">Moriarty</a>
-            </li>
-          </ul>
-          <div id="sherlock-0" class="tabpanel" role="tabpanel" aria-labelledby="sherlock-tab-0">
+        <h1>Accordion</h1>
+        <div class="accordion" role="tablist" aria-multiselectable="true">
+          <h3 id="sherlock-tab-0" role="tab" class="tab" aria-controls="sherlock-0" tabindex="1"> 
+            <a href="#sherlock-0" data-lu="Button:Expand" tabindex="-1" role="button">Sherlock</a>
+          </h3>
+          <div id="sherlock-0" role="tabpanel" aria-labelledby="sherlock-tab-0" class="tabpanel lu-state-hidden">
             <h2>Sherlock</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -38,6 +30,10 @@
             cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
             proident, sunt in culpa qui officia deserunt <a href="#">focusable</a> mollit anim id est laborum.</p>
           </div>
+
+          <h3 id="watson-tab-0" role="tab" class="tab" aria-controls="watson-0" tabindex="1"> 
+            <a href="#watson-0" data-lu="Button:Expand" tabindex="-1" role="button">Watson</a>
+          </h3>
           <div id="watson-0" role="tabpanel" aria-labelledby="watson-tab-0" class="tabpanel lu-state-hidden">
             <h2>Watson</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -47,6 +43,10 @@
             cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
             proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div>
+
+          <h3 id="moriarty-tab-0" class="tab" role="tab" aria-controls="moriarty-0" tabindex="1"> 
+            <a href="#moriarty-0" data-lu="Button:Expand" tabindex="-1" role="button">Moriarty</a>
+          </h3>
           <div id="moriarty-0" role="tabpanel" aria-labelledby="moriarty-tab-0" class="tabpanel lu-state-hidden">
             <h2>Moriarty</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod

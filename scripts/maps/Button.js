@@ -4,7 +4,11 @@ define(['Map', 'SUPPORTS'], function (Map, SUPPORTS) {
 
   events += ' focus';
 
-  Button = new Map({id: 'Button', executeOnEvent: events});
+  Button = new Map({
+    id: 'Button',
+    executeOnEvent: events,
+    autoExecute: true
+  });
 
   Button.direct('[data-lu~=\"Button:Select\"]', function () {
     this.settings.action = 'select';

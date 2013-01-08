@@ -1,33 +1,78 @@
+/**
+ * Tabs
+ */
+@import "font-awesome";
+
+@mixin tab() {
+  display: inline-block;
+  width: auto;
+  padding: 5px 10px;
+  border-radius: 2px 2px 0 0;
+  .icon-minus,
+  .icon-plus {
+    padding-right: 2px;
+  }
+  .icon-plus {
+    display: inline;
+  }
+  .icon-minus {
+    display: none;
+  }
+  &.lu-state-selected,
+  &.lu-state-expanded {
+    background-color: #f2f2f2;
+    .icon-plus {
+      display: none;
+    }
+    .icon-minus {
+      display: inline;
+    }
+  }
+  a {
+    display: block;
+    color: #545454;
+    text-decoration: none;
+  }
+}
+
+@mixin tablist() {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+@mixin tabpanel {
+  display: block;
+  &.lu-state-hidden {
+    display: none;
+  }
+}
+
+.accordion {
+  @include tablist();
+  border-bottom: none;
+  .tab {
+    @include tab();
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    margin: .5em 0;
+  }
+  .tabpanel {
+    @include tabpanel();
+  }
+}
+
 .tabs {
   .tablist {
-    margin: 0;
-    list-style: none;
-    padding: 0;
-    border-bottom: 1px solid #DDD;
+    @include tablist();
     .tab {
-      display: inline-block;
-      width: auto;
-      padding: 4px 8px;
-      margin-bottom: -1px;
-      border-radius: 2px 2px 0 0;
-      &:active,
-      &:focus {
-        background-color: #f8f8f8;
-      }
-      &.lu-state-selected {
-        border: 1px solid #DDD;
-        border-bottom-color: #f8f8f8;
-      }
-      a {
-        display: block;
-      }
+      @include tab();
     }
   }
   .tabpanel {
-    display: block;
-    padding: 4px 0px;
-    &.lu-state-hidden {
-      display: none;
-    }
+    @include tabpanel();
   }
 }

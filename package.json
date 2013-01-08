@@ -13,7 +13,7 @@
   "engine": "node >= 0.5.11",
   "scripts": {
     "test": "grunt qunit",
-    "start": "node server.js & compass watch"
+    "start": "rake jasmine & node server.js & compass watch"
   },
   "main": "./scripts",
   "contributors": [{

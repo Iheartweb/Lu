@@ -1,6 +1,9 @@
 define(['Lu', 'Fiber', 'constants', 'utilities', 'helpers'],
   function (Lu, Fiber, CONSTANTS, UTILITIES, HELPERS) {
-  return Fiber.extend(function () {
+
+  var Map;
+
+  Map = Fiber.extend(function () {
     var defaults = {
       autoExecute: false,
       executeOnEvent: undefined
@@ -56,6 +59,7 @@ define(['Lu', 'Fiber', 'constants', 'utilities', 'helpers'],
                 component = {
                   id: id,
                   executionEvent: self.executeOnEvent,
+                  autoExecute: self.autoExecute,
                   deferral: deferral,
                   ready: deferral.then,
                   settings: {}
@@ -80,8 +84,9 @@ define(['Lu', 'Fiber', 'constants', 'utilities', 'helpers'],
                 });
 
                 component.execute = function () {
-                  return self.execute($element);
+                  var execution = self.execute($element);
                   delete component.execute;
+                  return execution;
                 };
 
                 component.status = 'mapped';
@@ -165,11 +170,6 @@ define(['Lu', 'Fiber', 'constants', 'utilities', 'helpers'],
 
         processer = self.process($pattern);
 
-        if (this.autoExecute) {
-          processer.execute($pattern);
-          return this;
-        }
-
         if (this.executeOnEvent) {
           $pattern.one(this.executeOnEvent, function (event, instance) {
             var $this = $(this),
@@ -212,4 +212,6 @@ define(['Lu', 'Fiber', 'constants', 'utilities', 'helpers'],
       }
     };
   });
+
+  return Map;
 });

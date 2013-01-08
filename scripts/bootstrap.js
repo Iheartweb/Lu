@@ -8,5 +8,5 @@ require.config({
 
 require(['Processor', 'maps/Button', 'maps/Tab', 'maps/Tablist', 'maps/Tabpanel'],
   function (Processor) {
-    //new Processor(document);
+    new Processor(document);
 });

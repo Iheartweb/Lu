@@ -208,7 +208,6 @@ define(['./Composite', 'helpers', 'constants'],
             }
             component.ready(function () {
               //This behaves like an accordion
-              console.log(self.multiselectable, this);
               if(self.multiselectable && this.toggleExpanded) {
                 this.toggleExpanded()
               }

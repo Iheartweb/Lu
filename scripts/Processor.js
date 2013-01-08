@@ -28,15 +28,15 @@ define(['Lu', 'helpers', 'utilities', 'Fiber'],
           }
 
           if (component && component.execute) {
-            if (component.executionEvent) {
+            if (component.autoExecute) {
+              component.execute().then(function () {
+                if (processing) {
+                  process(components);
+                }
+              });
+            } else {
               process(components);
-              return;
             }
-            component.execute().then(function () {
-              if (processing) {
-                process(components);
-              }
-            });
           }
         }
 

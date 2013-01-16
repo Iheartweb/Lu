@@ -17,10 +17,10 @@
     <div class="content">
       <div class="main">
         <h1 id="nodes"></h1>
-        <div id="tabs"></div>
+        <div id="tabs" role="live"></div>
       </div>
       <div class="secondary">
-        <button id="add"></button>
+        <button id="add">Add Nodes</button>
       </div>
     </div>
   </div>
@@ -79,16 +79,14 @@
   var template = _.template($('#tabs-template').html()),
     $tabs = $('#tabs'),
     $nodes = $('#nodes'),
-    html = '',
-    iterations = 10;
+    $add = $('#add'),
+    counter = 0;
 
-  while (iterations > 0) {
-    html += template({ id:iterations });
-    iterations -= 1;
-  }
+  $add.on('click', function () {
+    $tabs.append(template({id:counter}));
+    counter +=1;
+  });
 
-  $tabs.html(html);
-  $nodes.html($('*').length + ' Nodes!');
 </script>
 
 <script src="/scripts/bootstrap.js"></script>

@@ -15,7 +15,6 @@ define(['constants', 'utilities'], function (CONSTANTS, UTILITIES) {
 
   function map(element) {
     var $element = UTILITIES.$(element);
-
     _.each(maps, function (Map) {
       Map.process($element);
     });

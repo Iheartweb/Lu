@@ -29,6 +29,7 @@ define(['Lu', 'Fiber', 'constants', 'utilities', 'helpers'],
         register(this);
       },
       process: function (element) {
+        debugger;
         var self = this,
           directives = this.directives,
           id = this.id,

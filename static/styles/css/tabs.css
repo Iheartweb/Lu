@@ -26,8 +26,8 @@
     */
 @font-face {
   font-family: "FontAwesome";
-  src: url('/styles/css/fonts/../../font/fontawesome-webfont.eot');
-  src: url('/styles/css/fonts/../../font/fontawesome-webfont.eot?#iefix') format('eot'), url('/styles/css/fonts/../../font/fontawesome-webfont.woff') format('woff'), url('/styles/css/fonts/../../font/fontawesome-webfont.ttf') format('truetype'), url('/styles/css/fonts/../../font/fontawesome-webfont.svg#FontAwesomeRegular') format('svg');
+  src: url('/static/styles/css/fonts/../../font/fontawesome-webfont.eot');
+  src: url('/static/styles/css/fonts/../../font/fontawesome-webfont.eot?#iefix') format('eot'), url('/static/styles/css/fonts/../../font/fontawesome-webfont.woff') format('woff'), url('/static/styles/css/fonts/../../font/fontawesome-webfont.ttf') format('truetype'), url('/static/styles/css/fonts/../../font/fontawesome-webfont.svg#FontAwesomeRegular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -84,7 +84,7 @@ li .icon-large:before {
 ul.icons {
   list-style-type: none;
   margin-left: 2em;
-  text-indent: -0.8em;
+  text-indent: -.8em;
 }
 /* line 90, ../sass/font-awesome.scss */
 ul.icons li [class^="icon-"],
@@ -1156,7 +1156,7 @@ ul.icons li .icon-large:before {
   margin: 0;
   list-style: none;
   padding: 0;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #dddddd;
   border-bottom: none;
 }
 /* line 55, ../sass/tabs.scss */
@@ -1167,9 +1167,9 @@ ul.icons li .icon-large:before {
   border-radius: 2px 2px 0 0;
   display: block;
   width: 100%;
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
   border-radius: 0;
-  margin: .5em 0;
+  margin: 0.5em 0;
 }
 /* line 12, ../sass/tabs.scss */
 .accordion .tab .icon-minus,
@@ -1211,12 +1211,16 @@ ul.icons li .icon-large:before {
   display: none;
 }
 
+/* line 68, ../sass/tabs.scss */
+.tabs {
+  margin-bottom: 40px;
+}
 /* line 69, ../sass/tabs.scss */
 .tabs .tablist {
   margin: 0;
   list-style: none;
   padding: 0;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #dddddd;
 }
 /* line 71, ../sass/tabs.scss */
 .tabs .tablist .tab {

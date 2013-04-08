@@ -23,8 +23,8 @@
     */
 @font-face {
   font-family: "FontAwesome";
-  src: url('/styles/css/fonts/../../font/fontawesome-webfont.eot');
-  src: url('/styles/css/fonts/../../font/fontawesome-webfont.eot?#iefix') format('eot'), url('/styles/css/fonts/../../font/fontawesome-webfont.woff') format('woff'), url('/styles/css/fonts/../../font/fontawesome-webfont.ttf') format('truetype'), url('/styles/css/fonts/../../font/fontawesome-webfont.svg#FontAwesomeRegular') format('svg');
+  src: url('/static/styles/css/fonts/../../font/fontawesome-webfont.eot');
+  src: url('/static/styles/css/fonts/../../font/fontawesome-webfont.eot?#iefix') format('eot'), url('/static/styles/css/fonts/../../font/fontawesome-webfont.woff') format('woff'), url('/static/styles/css/fonts/../../font/fontawesome-webfont.ttf') format('truetype'), url('/static/styles/css/fonts/../../font/fontawesome-webfont.svg#FontAwesomeRegular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -81,7 +81,7 @@ li .icon-large:before {
 ul.icons {
   list-style-type: none;
   margin-left: 2em;
-  text-indent: -0.8em;
+  text-indent: -.8em;
 }
 /* line 90, ../sass/font-awesome.scss */
 ul.icons li [class^="icon-"],

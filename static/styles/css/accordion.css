@@ -1,6 +1,6 @@
 /* line 2, ../sass/accordion.scss */
 .accordion .tab {
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
 }
 /* line 5, ../sass/accordion.scss */
 .accordion .tab:active, .accordion .tab:focus {
@@ -8,7 +8,7 @@
 }
 /* line 8, ../sass/accordion.scss */
 .accordion .tab.lu-state-expanded {
-  border: 1px solid #333;
+  border: 1px solid #333333;
 }
 /* line 11, ../sass/accordion.scss */
 .accordion .tab a {

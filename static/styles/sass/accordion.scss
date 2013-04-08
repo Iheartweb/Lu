@@ -1,0 +1,21 @@
+.accordion {
+  .tab {
+    border: 1px solid #ddd;
+    &:active,
+    &:focus {
+      background-color: #f8f8f8;
+    }
+    &.lu-state-expanded {
+      border: 1px solid #333;
+    }
+    a {
+      display: block;
+      padding: 4px 8px;
+    }
+  }
+  .tabpanel {
+    &.lu-state-hidden {
+      display: none;
+    }
+  }
+}

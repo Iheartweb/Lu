@@ -1,0 +1,39 @@
+/* line 22, ../sass/typography.scss */
+html {
+  font-size: 62.5%;
+}
+
+/* line 26, ../sass/typography.scss */
+body {
+  background: white;
+  font-size: 14px;
+  font-size: 1.4rem;
+  line-height: 21px;
+  line-height: 2.1rem;
+  font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #545454;
+  -webkit-font-smoothing: antialiased;
+  /* Fix for webkit rendering */
+  -webkit-text-size-adjust: 100%;
+}
+
+/* line 43, ../sass/typography.scss */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #181818;
+  font-family: "Georgia", "Times New Roman", serif;
+  font-weight: normal;
+}
+/* line 17, ../sass/typography.scss */
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+  font-weight: inherit;
+}

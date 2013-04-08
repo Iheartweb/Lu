@@ -1,0 +1,21 @@
+/* line 2, ../sass/accordion.scss */
+.accordion .tab {
+  border: 1px solid #ddd;
+}
+/* line 5, ../sass/accordion.scss */
+.accordion .tab:active, .accordion .tab:focus {
+  background-color: #f8f8f8;
+}
+/* line 8, ../sass/accordion.scss */
+.accordion .tab.lu-state-expanded {
+  border: 1px solid #333;
+}
+/* line 11, ../sass/accordion.scss */
+.accordion .tab a {
+  display: block;
+  padding: 4px 8px;
+}
+/* line 17, ../sass/accordion.scss */
+.accordion .tabpanel.lu-state-hidden {
+  display: none;
+}

@@ -1,0 +1,45 @@
+  //Fonts
+  $serif: "Georgia", "Times New Roman", serif;
+  $sans-serif: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  //Colors
+  $white: #fff;
+  $black: 000;
+  $grey: #545454;
+  $darkgrey: #181818;
+
+
+  @mixin header() {
+    color: $darkgrey;
+    font-family: $serif;
+    font-weight: normal;
+
+    a {
+      font-weight: inherit;
+    }
+  }
+
+  html {
+    font-size: 62.5%;
+  }
+
+  body {
+    background: $white;
+    font-size: 14px;
+    font-size: 1.4rem;
+    line-height: 21px;
+    line-height: 2.1rem;
+    font-family: $sans-serif;
+    color: $grey;
+    -webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @include header();
+  }

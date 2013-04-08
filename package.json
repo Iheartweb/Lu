@@ -3,47 +3,18 @@
   "version": "0.4.0",
   "author": {
     "name": "Robert Martone",
-    "email": "iheartweb@gmail.com",
-    "url": "http://www.robertmartone.com/"
+    "email": "iheartweb@gmail.com"
   },
   "dependencies": {
     "grunt": ">=0.3.12",
-    "node-static": ">=0.6.0"
+    "hapi": "~0.15.6"
   },
   "engine": "node >= 0.5.11",
   "scripts": {
     "test": "grunt qunit",
-    "start": "rake jasmine & node server.js & compass watch"
+    "start": "node server.js & compass watch"
   },
   "main": "./scripts",
-  "contributors": [{
-    "name": "Matt Edwards",
-    "email": "matt.m.edwards@gmail.com"
-  }, {
-    "name": "Steven Foote",
-    "email": "smfoote@gmail.com"
-  }, {
-    "name": "Nate Eborn",
-    "email": "rockthemic12@gmail.com"
-  }, {
-    "name": "Kiro Risk",
-    "email": "kirollos@gmail.com"
-  }, {
-    "name": "James Gourgoutis",
-    "email": "jimg@yojimg.net"
-  }, {
-    "name": "Brendan Dean",
-    "email": "brendean@gmail.com"
-  }, {
-    "name": "Andrew A. Lee",
-    "email": "starsthatfell@gmail.com"
-  }, {
-    "name": "Alvin Huynh",
-    "email": "ahuynh5190@gmail.com"
-  }, {
-    "name": "Yi-Fan Zhang",
-    "email": "yifanz@yahoo.com"
-  }],
   "repository": {
     "type": "git",
     "url": "https://github.com/linkedin/Lu.git"

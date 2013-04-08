@@ -7,7 +7,7 @@ define(['Map', 'SUPPORTS'], function (Map, SUPPORTS) {
   Button = new Map({
     id: 'Button',
     executeOnEvent: events,
-    autoExecute: true
+    autoExecute: false
   });
 
   Button.direct('[data-lu~=\"Button:Select\"]', function () {
